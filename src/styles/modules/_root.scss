@@ -1,0 +1,34 @@
+@import 'rem-calc';
+@import 'colors';
+@import 'media-queries';
+
+
+$globalGap: rem-calc(18);
+$globalPadding: $globalGap;
+$globalRadius: rem-calc(18);
+$globalShadow: 0px 0px rem-calc(18) rem-calc(10) rgba(0, 0, 0, 0.05);
+
+$siteWidth: rem-calc(1200);
+
+$primaryFont: 'Inter', sans-serif;
+$headingFont: 'Plus Jakarta Sans', sans-serif;
+
+@mixin button-reset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}

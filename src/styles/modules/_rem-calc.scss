@@ -1,0 +1,53 @@
+@use "sass:math";
+
+$rem-base: 16px !default;
+
+@function strip-unit($num) {
+  @return math.div($num, $num * 0 + 1);
+}
+
+@function convert-to-rem($value, $base-value: $rem-base) {
+  $value: math.div(strip-unit($value), strip-unit($base-value)) * 1rem;
+
+  @if ($value==0rem) {
+    $value: 0;
+  }
+
+  @return $value;
+}
+
+@function rem-calc($values, $base-value: $rem-base) {
+  $max: length($values);
+
+  @if $max==1 {
+    @return convert-to-rem(nth($values, 1), $base-value);
+  }
+
+  $remValues: (
+  );
+
+@for $i from 1 through $max {
+  $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
+}
+
+@return $remValues;
+}
+
+@function em-calc($values) {
+  $remValues: rem-calc($values);
+
+  $max: length($remValues);
+
+  @if $max==1 {
+    @return strip-unit(nth($remValues, 1)) * 1em;
+  }
+
+  $emValues: (
+  );
+
+@for $i from 1 through $max {
+  $emValues: append($emValues, strip-unit(nth($remValues, $i)) * 1em);
+}
+
+@return $emValues;
+}

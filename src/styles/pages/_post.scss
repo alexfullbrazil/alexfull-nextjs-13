@@ -1,0 +1,64 @@
+@import "@/styles/modules/root";
+
+.post-content {
+  line-height: 1.8;
+  font-size: em-calc(19);
+  width: 100%;
+  max-width: rem-calc(768);
+  margin: 0 auto;
+}
+
+.post-header {
+  width: 100%;
+}
+
+.post-title {
+  font-size: em-calc(28);
+  margin-bottom: calc($globalGap * 2);
+  line-height: 1.2;
+  color: $darkBlue;
+
+  @include lg {
+    font-size: em-calc(42);
+  }
+}
+
+.post-excerpt {
+  font-size: em-calc(18);
+  font-weight: 400;
+  margin-bottom: calc($globalGap * 2);
+  line-height: 1.4;
+
+  @include lg {
+    font-size: em-calc(24);
+  }
+}
+
+.post-author-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: calc($globalGap * 2);
+}
+
+.post-author-picture {
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+.post-author {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $globalGap;
+}
+
+.post-cover-image {
+  width: 100%;
+  height: auto;
+  border-radius: calc($globalRadius / 2);
+
+  @include lg {
+    margin-bottom: calc($globalGap * 2);
+  }
+}

@@ -1,0 +1,71 @@
+@import '@/styles/modules/root';
+@import '@/styles/pages/posts';
+@import '@/styles/pages/post';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: $primaryFont;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  color: $grey;
+
+  --globalGap: #{$globalGap};
+  --globalPadding: #{$globalGap};
+  --globalRadius: #{$globalRadius};
+  --globalShadow: 0px 0px 18px 10px rgba(0, 0, 0, 0.05);
+
+  --siteWidth: #{$siteWidth};
+
+  --primaryFont: #{$primaryFont};
+  --headingFont: #{$headingFont};
+
+  // colors
+  --purple: #{$purple};
+  --darkBlue: #{$darkBlue};
+  --black: #{$black};
+  --grey: #{$grey};
+  --lightGrey: #{$lightGrey};
+  --snow: #{$snow};
+  --danger: #{$danger};
+  --success: #{$success};
+  --warning: #{$warning};
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: $headingFont;
+  }
+}
+
+a {
+  text-decoration: inherit;
+}
+
+p {
+  margin-bottom: $globalGap;
+}
+
+body {
+  margin: 0;
+  padding-top: rem-calc(100);
+}
+
+.container {
+  width: 100%;
+  max-width: $siteWidth;
+  margin: 0 auto;
+  padding: 0 $globalGap;
+}
