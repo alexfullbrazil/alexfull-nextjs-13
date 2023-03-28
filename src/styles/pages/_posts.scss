@@ -1,4 +1,4 @@
-@import "@/styles/modules/root";
+@import '@/styles/modules/root';
 
 .blog-hero-wrapper {
   margin-bottom: $globalGap;
@@ -72,9 +72,10 @@
   width: 100%;
   border-radius: rem-calc(4);
   object-fit: cover;
+  height: rem-calc(250);
 
-  @include lg {
-    height: rem-calc(420);
+  @include md {
+    height: rem-calc(435);
   }
 }
 
@@ -344,13 +345,13 @@
 .post-card-cover-image {
   width: 100%;
   border-radius: rem-calc(4);
-  display: none;
-
-  height: rem-calc(200);
+  margin-bottom: rem-calc(24);
+  height: rem-calc(240);
   object-fit: cover;
 
   @include md {
-    display: block;
+    margin-bottom: 0;
+    height: rem-calc(200);
   }
 }
 

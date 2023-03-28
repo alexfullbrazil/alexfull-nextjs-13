@@ -4,7 +4,7 @@ export default function CardsPostsSkeleton() {
   return (
     <Skeleton height={435}>
       <Col>
-        <Box width={95} height={200} />
+        <Box width={100} height={200} />
         <Box width={90} height={24} />
         <Box width={75} height={24} />
         <Box marginTop={18} width={95} height={18} />
