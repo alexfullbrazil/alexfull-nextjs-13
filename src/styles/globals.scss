@@ -2,6 +2,7 @@
 @import '@/styles/pages/posts';
 @import '@/styles/pages/post';
 @import '@/styles/pages/portfolio';
+@import '@/styles/components/header';
 
 * {
   margin: 0;
@@ -59,9 +60,8 @@ p {
   margin-bottom: $globalGap;
 }
 
-body {
-  margin: 0;
-  padding: rem-calc(40 0);
+.site-wrapper {
+  margin-top: rem-calc(64);
 }
 
 .container {

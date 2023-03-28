@@ -8,11 +8,15 @@ import '@fontsource/plus-jakarta-sans/800.css';
 import '@fontsource/plus-jakarta-sans/400.css';
 
 import '@/styles/globals.scss';
+import Header from '@/components/header';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />
+      <Header />
+      <main className="site-wrapper">
+        <Component {...pageProps} />
+      </main>
     </ApolloProvider>
   );
 }

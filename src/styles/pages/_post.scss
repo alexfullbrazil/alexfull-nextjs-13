@@ -1,4 +1,4 @@
-@import "@/styles/modules/root";
+@import '@/styles/modules/root';
 
 .post-content {
   line-height: 1.8;
@@ -6,6 +6,7 @@
   width: 100%;
   max-width: rem-calc(768);
   margin: 0 auto;
+  padding-top: rem-calc(60);
 }
 
 .post-header {

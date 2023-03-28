@@ -1,8 +1,7 @@
 @import '@/styles/modules/root';
 
 .blog-hero-wrapper {
-  margin-bottom: $globalGap;
-
+  margin-top: rem-calc(100);
   padding-bottom: calc($globalGap * 3);
 }
 

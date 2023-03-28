@@ -1,0 +1,64 @@
+@import '@/styles/modules/root';
+
+.active {
+  top: 0;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  z-index: 2;
+  transition: 0.3s linear;
+  background: white;
+  box-shadow: $globalShadow;
+}
+.hidden {
+  top: rem-calc(-65);
+}
+
+.on-top {
+  box-shadow: none;
+  margin-top: 0;
+}
+
+.header-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: rem-calc(40);
+}
+
+.show-header {
+  position: fixed;
+}
+
+.navigation {
+  padding: $globalGap 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  transition: 0.3s linear;
+
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+  }
+
+  .nav-links {
+    gap: $globalGap;
+  }
+
+  .social-links {
+    gap: calc($globalGap / 2);
+  }
+
+  a {
+    color: $darkBlue;
+    font-weight: 600;
+  }
+}
