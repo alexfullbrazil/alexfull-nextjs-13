@@ -28,7 +28,7 @@ export default function FeaturedPosts({
     <div className="featured-posts-wrapper">
       <div className="featured-posts-content">
         <span className="featured-tag">Featured</span>
-        <Link href={`post/${slug}`}>
+        <Link href={`posts/${slug}`}>
           <h2 className="featured-posts-title">{title}</h2>
         </Link>
         <p className="featured-posts-excerpt">{excerpt}</p>
@@ -51,7 +51,7 @@ export default function FeaturedPosts({
         </div>
       </div>
       <div className="featured-posts-cover-image-wrapper">
-        <Link href={`post/${slug}`}>
+        <Link href={`posts/${slug}`}>
           <Image
             className="featured-posts-cover-image"
             src={coverImage}

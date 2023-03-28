@@ -9,14 +9,14 @@
 // FEATURED POSTS
 
 .featured-tag {
-  background: $darkBlue;
+  background: $warning;
   width: fit-content;
-  color: $snow;
+  color: $darkBlue;
   font-weight: bold;
   font-size: em-calc(13);
-  padding: rem-calc(5 10);
+  padding: rem-calc(7 15);
   border-radius: 999px;
-  margin: $globalGap 0;
+  margin-bottom: $globalGap;
 }
 
 .featured-posts-wrapper {

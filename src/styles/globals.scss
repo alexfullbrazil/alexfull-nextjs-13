@@ -1,6 +1,7 @@
 @import '@/styles/modules/root';
 @import '@/styles/pages/posts';
 @import '@/styles/pages/post';
+@import '@/styles/pages/portfolio';
 
 * {
   margin: 0;
@@ -60,7 +61,7 @@ p {
 
 body {
   margin: 0;
-  padding-top: rem-calc(100);
+  padding: rem-calc(40 0);
 }
 
 .container {
