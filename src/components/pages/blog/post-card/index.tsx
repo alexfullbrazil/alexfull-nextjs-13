@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Placeholder from '@/assets/images/placeholder.png';
-
 interface PostCardProps {
   title?: string;
   slug?: string;

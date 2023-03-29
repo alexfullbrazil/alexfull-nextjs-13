@@ -10,6 +10,8 @@ const iconSize = 28;
 
 export default function Header({ children }: HeaderProps) {
   const [navigation, setNavigation] = useState<boolean>(false);
+  const [social, setSocial] = useState<boolean>(false);
+  const [ontop, setOntop] = useState<boolean>(true);
 
   const toggleNavigation = () => {
     setNavigation((prev) => !prev);
@@ -26,6 +28,24 @@ export default function Header({ children }: HeaderProps) {
       setNavigation(false);
     }
   };
+
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY;
+
+    if (scrollPosition <= 50) {
+      setOntop(true);
+    } else {
+      setOntop(false);
+    }
+  };
+
+  useEffect(() => {
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
@@ -58,7 +78,11 @@ export default function Header({ children }: HeaderProps) {
           </li>
         </ul>
       </nav>
-      <div className={`header-wrapper ${navigation ? 'show-navigation' : ''}`}>
+      <div
+        className={`header-wrapper ${navigation ? 'show-navigation' : ''}${
+          ontop ? 'on-top' : ''
+        }`}
+      >
         <div className="container">
           <div className="navigation-wrapper">
             <div>
@@ -83,8 +107,18 @@ export default function Header({ children }: HeaderProps) {
               )}
             </div>
 
-            <nav className="social-navigation">
-              <ul>
+            <nav className="social-navigation-wrapper">
+              <button
+                className="trigger-social-navigation"
+                onClick={() => setSocial((prev) => !prev)}
+              >
+                <Svg
+                  color="var(--darkBlue)"
+                  size={iconSize}
+                  src="/assets/icons/share.svg"
+                />
+              </button>
+              <ul className={`social-navigation ${social ? 'active' : ''}`}>
                 <li>
                   <a
                     target="_blanc"

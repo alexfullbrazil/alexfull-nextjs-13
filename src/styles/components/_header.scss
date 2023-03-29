@@ -10,9 +10,13 @@
   justify-content: center;
   margin-bottom: rem-calc(40);
   box-shadow: $globalShadow;
-  border-bottom: 1px solid $lightGrey;
   background: white;
   height: rem-calc(65);
+  transition: 0.3s ease-in-out;
+
+  &.on-top {
+    box-shadow: none;
+  }
 
   &.show-navigation {
     box-shadow: none;
@@ -63,11 +67,30 @@
   }
 }
 
+.social-navigation-wrapper {
+  position: relative;
+}
+
+.trigger-social-navigation {
+  @include button-reset;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+}
+
 .social-navigation {
-  ul {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: calc($globalGap/2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc($globalGap / 2);
+  margin-right: rem-calc(30);
+  opacity: 0;
+  transition: 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+  pointer-events: none;
+
+  &.active {
+    opacity: 1;
+    margin-right: rem-calc(40);
+    pointer-events: all;
   }
 }
