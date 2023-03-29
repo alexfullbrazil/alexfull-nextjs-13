@@ -5,14 +5,14 @@ import {
 } from '@/@codegen/gql/types';
 import Pagination from '@atlaskit/pagination';
 import { PostCard } from '@/components/post-card';
-import FeaturedPosts from '@/featured-posts';
+import FeaturedPosts from '@/components/featured-posts';
 import { formatDate } from '@/utils/formatters';
 import Image from 'next/image';
 import { useState } from 'react';
 import CardsPostsSkeleton from './skeletons/cards-posts-skeleton';
 import FeaturedPostsSkeleton from './skeletons/featured-posts-skeleton';
 
-export default function Posts() {
+export default function Blog() {
   const [orderBy, setOrderBy] = useState<'CreatedAtDesc' | 'CreatedAtAsc'>(
     'CreatedAtDesc',
   );

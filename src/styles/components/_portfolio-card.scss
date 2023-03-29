@@ -1,0 +1,113 @@
+@import '@/styles/modules/root';
+
+.portfolio-card-wrapper {
+  display: grid;
+  grid-gap: calc($globalGap * 3);
+
+  @include md {
+    grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
+  }
+}
+
+.portfolio-card-item {
+  overflow: hidden;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: calc($globalRadius / 2);
+  box-shadow: $globalShadow;
+
+  img {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    object-fit: cover;
+  }
+
+  span {
+    font-weight: bold;
+    font-size: rem-calc(14);
+  }
+
+  a {
+    display: flex;
+    background: $darkBlue;
+    color: $snow;
+    padding: rem-calc(10 20);
+    margin-top: rem-calc(18);
+    width: fit-content;
+    border-radius: 999px;
+    font-weight: bold;
+    font-size: rem-calc(14);
+  }
+
+  .porfolio-card-button {
+    @include button-reset;
+    display: flex;
+    background: $darkBlue;
+    color: $snow;
+    padding: rem-calc(10 20);
+    margin-top: rem-calc(18);
+    width: fit-content;
+    border-radius: 999px;
+    font-weight: bold;
+    font-size: rem-calc(14);
+    cursor: pointer;
+
+    &:hover {
+      background: $warning;
+      color: $darkBlue;
+    }
+  }
+
+  .portfolio-card-content {
+    &.active {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.portfolio-card-content {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: white;
+  padding: calc($globalGap * 2);
+  margin-bottom: rem-calc(-350);
+  transition: 0.2s cubic-bezier(0, 0.64, 0.6, 0.97);
+  box-shadow: $globalShadow;
+  border-radius: calc($globalRadius / 2);
+
+  video {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
+.trigger-content {
+  @include button-reset;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $warning;
+  color: white;
+  border-radius: calc($globalRadius / 2) 0;
+  width: rem-calc(38);
+  height: rem-calc(38);
+}
+
+.portfolio-card-title {
+  h2 {
+    color: $darkBlue;
+    font-size: em-calc(22);
+    margin-bottom: rem-calc(12);
+  }
+}

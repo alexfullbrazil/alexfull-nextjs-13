@@ -1,4 +1,4 @@
-import Icon from '@/components/icon';
+import Svg from '@/components/svg';
 import { ReactNode } from 'react';
 import { ModalWrapper, ModalContainer, CloseButton } from './styles';
 
@@ -29,7 +29,11 @@ export default function Modal({
         <ModalContainer marginTop={marginTop} maxWidth={maxWidth} flat={flat}>
           {closeButton && (
             <CloseButton onClick={onClick}>
-              <Icon file="clear" color="var(--darkBlue)" size={38} />
+              <Svg
+                src="/assets/icons/clear.svg"
+                color="var(--darkBlue)"
+                size={38}
+              />
             </CloseButton>
           )}
           {children}

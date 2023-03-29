@@ -1,0 +1,32 @@
+@import '@/styles/modules/root';
+
+.not-found-wrapper {
+  @include flex-centered;
+  background: #fafafa;
+
+  > div {
+    @include flex-centered;
+  }
+
+  width: 100%;
+  height: 95vh;
+
+  img {
+    width: 100%;
+  }
+
+  > :nth-child(1) {
+    max-width: rem-calc(150);
+    gap: rem-calc(32);
+  }
+
+  > :nth-child(2) {
+    max-width: rem-calc(580);
+    padding: rem-calc(24);
+  }
+
+  > :nth-child(3) {
+    max-width: rem-calc(150);
+    gap: rem-calc(24);
+  }
+}

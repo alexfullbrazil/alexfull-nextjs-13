@@ -28,7 +28,7 @@ export function PostCard({
 }: PostCardProps) {
   return (
     <div className="post-card-item">
-      <Link href={`posts/${slug}`}>
+      <Link href={`blog/${slug}`}>
         <Image
           className="post-card-cover-image"
           src={coverImage}
@@ -40,7 +40,7 @@ export function PostCard({
         />
       </Link>
       <div className="post-card-content">
-        <Link href={`posts/${slug}`}>
+        <Link href={`blog/${slug}`}>
           <h2 className="post-card-title">{title}</h2>
         </Link>
 
@@ -61,7 +61,7 @@ export function PostCard({
               <time className="post-card-created-at">{createdAt}</time>
             </div>
           </div>
-          <Link className="post-card-read-more" href={`posts/${slug}`}>
+          <Link className="post-card-read-more" href={`blog/${slug}`}>
             More {'->'}
           </Link>
         </div>

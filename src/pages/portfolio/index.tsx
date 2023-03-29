@@ -4,7 +4,7 @@ import {
   useGetPostsQuery,
   useGetPortfoliosQuery,
 } from '@/@codegen/gql/types';
-import Icon from '@/components/icon';
+import Svg from '@/components/svg';
 import { PostCard } from '@/components/post-card';
 import { useEffect, useState } from 'react';
 
@@ -12,8 +12,8 @@ import Pagination from '@atlaskit/pagination';
 import Modal from '@/components/modal';
 import ToolTips from '@/components/tooltips';
 
-import CardsPostsSkeleton from '../posts/skeletons/cards-posts-skeleton';
-import FeaturedPostsSkeleton from '../posts/skeletons/featured-posts-skeleton';
+import CardsPostsSkeleton from '../blog/skeletons/cards-posts-skeleton';
+import FeaturedPostsSkeleton from '../blog/skeletons/featured-posts-skeleton';
 import { PortfolioCard } from '@/components/portfolio-card';
 
 import CardsPortfoliosSkeleton from '@/components/portfolio-card/skeleton/cards.portfolios-skeleton';
@@ -37,16 +37,6 @@ export default function Portfolio() {
         },
       },
     });
-
-  const toggleModal = () => {
-    setModal(!modal);
-    setSearch(null);
-    if (!modal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-  };
 
   return (
     <>
@@ -95,7 +85,11 @@ export default function Portfolio() {
               onClick={() => setCategory(undefined)}
             >
               Reset Filter{' '}
-              <Icon color="var(--darkBlue)" size={22} file="back-spin" />
+              <Svg
+                color="var(--darkBlue)"
+                size={22}
+                src="/assets/icons/back-spin.svg"
+              />
             </button>
           </div>
         </div>

@@ -5,7 +5,7 @@ import { IconWrapper } from './styles';
 
 export interface IconProps {
   onClick?(arg: any): void;
-  file?: string;
+  src?: string;
   fill?: string;
   stroke?: string;
   color?: string;
@@ -26,9 +26,9 @@ export interface IconProps {
 
 const filePath = '/assets/icons/';
 
-export default function Icon({
+export default function Svg({
   onClick,
-  file,
+  src,
   fill,
   stroke,
   color,
@@ -49,7 +49,7 @@ export default function Icon({
   return (
     <IconWrapper
       onClick={onClick}
-      aria-label={file}
+      aria-label={src}
       cursor={cursor}
       width={width}
       height={height}
@@ -66,7 +66,7 @@ export default function Icon({
       marginBottom={marginBottom}
       marginLeft={marginLeft}
     >
-      <ReactSVG wrapper="span" src={filePath + file + '.svg'} />
+      <ReactSVG wrapper="span" src={src} />
       {children}
     </IconWrapper>
   );

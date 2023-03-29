@@ -2,6 +2,7 @@ import Modal from '@/components/modal';
 import { YoutubeVideo } from '@/components/youtube-video';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Svg from '@/components/svg';
 
 interface PortfolioCardProps {
   id?: string;
@@ -36,17 +37,30 @@ export function PortfolioCard({
   width,
   height,
 }: PortfolioCardProps) {
-  const [comtentModal, setContentModal] = useState<boolean>(false);
+  const [contentModal, setContentModal] = useState<boolean>(false);
+  const [content, setContent] = useState<boolean>(false);
 
   const toggleModal = () => {
-    setContentModal(!comtentModal);
+    setContentModal(!contentModal);
   };
+
+  const toggleContent = () => {
+    setContent((prev) => !prev);
+  };
+
+  useEffect(() => {
+    if (contentModal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [contentModal]);
 
   return (
     <>
       {modal && (
         <>
-          {comtentModal && (
+          {contentModal && (
             <Modal
               maxWidth={980}
               align="flex-start"
@@ -82,6 +96,7 @@ export function PortfolioCard({
           )}
         </>
       )}
+
       <div className="portfolio-card-item">
         <Image
           className="portfolio-card-image"
@@ -93,7 +108,7 @@ export function PortfolioCard({
           style={{ width: '100%', height: 'auto' }}
         />
 
-        <div className="portfolio-card-content">
+        <div className={`portfolio-card-content ${content ? 'active' : ''}`}>
           <div className="portfolio-card-title">
             <h2>{title}</h2>
           </div>
@@ -132,6 +147,13 @@ export function PortfolioCard({
             </a>
           )}
         </div>
+        <button className="trigger-content" onClick={toggleContent}>
+          {content ? (
+            <Svg src="/assets/icons/minus.svg" size={32} />
+          ) : (
+            <Svg src="/assets/icons/plus.svg" size={32} />
+          )}
+        </button>
       </div>
     </>
   );

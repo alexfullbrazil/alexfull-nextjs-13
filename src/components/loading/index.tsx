@@ -1,4 +1,4 @@
-import Icon from '@/components/icon';
+import Svg from '@/components/svg';
 import { LoadingWrapper, Spin, Info } from './styles';
 
 interface LoadingProps {
@@ -9,7 +9,11 @@ export default function Loading({ info }: LoadingProps) {
   return (
     <LoadingWrapper>
       <Spin>
-        <Icon size={32} file="spinner" color="var(--darkBlue)" />
+        <Svg
+          size={32}
+          src="/assets/icons/spinner.svg"
+          color="var(--darkBlue)"
+        />
       </Spin>
       <Info>{info}</Info>
     </LoadingWrapper>
