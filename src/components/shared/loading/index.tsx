@@ -1,4 +1,4 @@
-import Svg from '@/components/svg';
+import Svg from '@/components/shared/svg';
 import { LoadingWrapper, Spin, Info } from './styles';
 
 interface LoadingProps {

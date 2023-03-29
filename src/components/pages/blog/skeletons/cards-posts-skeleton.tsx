@@ -1,4 +1,4 @@
-import { Skeleton, Col, Box } from '@/components/skeleton';
+import { Skeleton, Col, Box } from '@/components/shared/skeleton';
 
 export default function CardsPostsSkeleton() {
   return (

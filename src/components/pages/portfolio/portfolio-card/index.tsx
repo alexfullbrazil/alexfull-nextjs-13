@@ -1,8 +1,8 @@
-import Modal from '@/components/modal';
-import { YoutubeVideo } from '@/components/youtube-video';
+import Modal from '@/components/shared/modal';
+import { YoutubeVideo } from '@/components/shared/youtube-video';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Svg from '@/components/svg';
+import Svg from '@/components/shared/svg';
 
 interface PortfolioCardProps {
   id?: string;

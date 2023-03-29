@@ -1,8 +1,8 @@
-import Svg from '@/components/svg';
-import ToolTips from '@/components/tooltips';
+import ToolTips from '@/components/shared/tooltips';
 import { SearchBoxWrapper } from './styles';
+import Svg from '@/components/shared/svg';
 
-interface SearchBoxProps {
+interface SearchProps {
   placeholder: string;
   value: any;
   onChange?(arg: any): void;
@@ -11,35 +11,33 @@ interface SearchBoxProps {
   onBlur?(arg: any): void;
 }
 
-export default function SearchBox({
+export default function Search({
   placeholder,
-  value,
   onChange,
   onClick,
   onFocus,
   onBlur,
-}: SearchBoxProps) {
+  value,
+}: SearchProps) {
   return (
     <SearchBoxWrapper>
       {value ? (
-        <ToolTips position="top" content="Clear" height={34} offset={10}>
+        <ToolTips position="left" content="Clear" height={24} offset={-10}>
           <Svg
             src="/assets/icons/clear.svg"
             onClick={onClick}
-            size={38}
-            color="var(--darkBlue)"
+            size={24}
             cursor="pointer"
           />
         </ToolTips>
       ) : (
-        <Svg src="/assets/icons/search.svg" size={38} color="var(--darkBlue)" />
+        <Svg src="/assets/icons/search.svg" size={24} />
       )}
       <input
-        autoFocus
         type="text"
         placeholder={placeholder}
-        value={value}
         onChange={onChange}
+        value={value}
         onFocus={onFocus}
         onBlur={onBlur}
       />

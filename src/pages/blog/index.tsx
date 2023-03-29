@@ -1,21 +1,20 @@
 import {
-  useGetPostsQuery,
   ImageFit,
   PostOrderByInput,
+  useGetPostsQuery,
 } from '@/@codegen/gql/types';
-import Pagination from '@atlaskit/pagination';
-import { PostCard } from '@/components/post-card';
-import FeaturedPosts from '@/components/featured-posts';
+import FeaturedPosts from '@/components/pages/blog/featured-posts';
+import { PostCard } from '@/components/pages/blog/post-card';
+import SearchResults from '@/components/pages/blog/search/search-results';
+import Modal from '@/components/shared/modal';
+import SearchBox from '@/components/shared/search-box';
+import Svg from '@/components/shared/svg';
+import ToolTips from '@/components/shared/tooltips';
 import { formatDate } from '@/utils/formatters';
-import Image from 'next/image';
+import Pagination from '@atlaskit/pagination';
 import { useState } from 'react';
-import CardsPostsSkeleton from './skeletons/cards-posts-skeleton';
-import FeaturedPostsSkeleton from './skeletons/featured-posts-skeleton';
-import Modal from '@/components/modal';
-import SearchBox from '@/components/search-box';
-import SearchResults from '@/components/search/search-results';
-import ToolTips from '@/components/tooltips';
-import Svg from '@/components/svg';
+import CardsPostsSkeleton from '@/components/pages/blog/skeletons/cards-posts-skeleton';
+import FeaturedPostsSkeleton from '@/components/pages/blog/skeletons/featured-posts-skeleton';
 
 export default function Blog() {
   const [orderBy, setOrderBy] = useState<'CreatedAtDesc' | 'CreatedAtAsc'>(

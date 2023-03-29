@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { formatDate } from '@/utils/formatters';
 import Image from 'next/image';
 import Head from 'next/head';
-import Loading from '@/components/loading';
+import Loading from '@/components/shared/loading';
 
 export const metadata = {
   title: 'Next.js',

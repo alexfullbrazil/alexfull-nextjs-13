@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
-import Svg from '@/components/svg';
+import Svg from '@/components/shared/svg';
 import Link from 'next/link';
 interface HeaderProps {
   children?: ReactNode;

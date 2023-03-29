@@ -1,23 +1,10 @@
-import {
-  ImageFit,
-  PostOrderByInput,
-  useGetPostsQuery,
-  useGetPortfoliosQuery,
-} from '@/@codegen/gql/types';
-import Svg from '@/components/svg';
-import { PostCard } from '@/components/post-card';
-import { useEffect, useState } from 'react';
+import { useGetPortfoliosQuery } from '@/@codegen/gql/types';
+import Svg from '@/components/shared/svg';
+import { useState } from 'react';
 
-import Pagination from '@atlaskit/pagination';
-import Modal from '@/components/modal';
-import ToolTips from '@/components/tooltips';
+import { PortfolioCard } from '@/components/pages/portfolio/portfolio-card';
 
-import CardsPostsSkeleton from '../blog/skeletons/cards-posts-skeleton';
-import FeaturedPostsSkeleton from '../blog/skeletons/featured-posts-skeleton';
-import { PortfolioCard } from '@/components/portfolio-card';
-
-import CardsPortfoliosSkeleton from '@/components/portfolio-card/skeleton/cards.portfolios-skeleton';
-import { PortfolioWhereInput } from '@/@codegen/gql/types';
+import CardsPortfoliosSkeleton from '@/components/pages/portfolio/skeleton/cards-portfolios-skeleton';
 
 export default function Portfolio() {
   const [category, setCategory] = useState<

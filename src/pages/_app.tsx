@@ -8,7 +8,7 @@ import '@fontsource/plus-jakarta-sans/800.css';
 import '@fontsource/plus-jakarta-sans/400.css';
 
 import '@/styles/globals.scss';
-import Header from '@/components/header';
+import Header from '@/components/shared/header';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

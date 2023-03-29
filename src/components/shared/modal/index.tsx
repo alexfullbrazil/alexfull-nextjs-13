@@ -1,4 +1,4 @@
-import Svg from '@/components/svg';
+import Svg from '@/components/shared/svg';
 import { ReactNode } from 'react';
 import { ModalWrapper, ModalContainer, CloseButton } from './styles';
 
