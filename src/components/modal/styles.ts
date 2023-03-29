@@ -42,7 +42,7 @@ export const ModalContainer = styled.div<ModalProps>`
     css`
       & {
         padding: 0;
-        margin: 0;
+
         border-radius: 0;
         box-shadow: none;
       }
@@ -50,10 +50,6 @@ export const ModalContainer = styled.div<ModalProps>`
 `;
 
 export const CloseButton = styled.div<ModalProps>`
-  /* position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 3; */
   cursor: pointer;
   margin-bottom: 14px;
   align-self: flex-end;

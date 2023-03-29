@@ -168,10 +168,10 @@
 // SEARCH RESULTS
 
 .search-results-wrapper {
-  max-height: rem-calc(420);
+  max-height: rem-calc(380);
   overflow-y: auto;
-  border-top: 1px solid #e5e5e5;
-  border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid $lightGrey;
+  border-bottom: 1px solid $lightGrey;
 }
 
 .search-results-footer {
@@ -184,7 +184,7 @@
   span {
     font-weight: 600;
     width: 100%;
-    color: $black;
+    color: $darkBlue;
   }
 }
 
@@ -193,10 +193,10 @@
   align-items: center;
   justify-content: center;
   border: none;
-  background: $purple;
+  background: $darkBlue;
   color: white;
   padding: rem-calc(10 20);
-  border-radius: 4px;
+  border-radius: 999px;
   font-weight: 600;
   cursor: pointer;
 }
@@ -205,6 +205,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: $globalGap;
 }
 
@@ -237,11 +238,17 @@
   padding: calc($globalGap / 2);
   margin: calc($globalGap / 2) 0 calc($globalGap / 2) 0;
 
-  border-radius: rem-calc(6);
+  border-radius: 999px;
   cursor: pointer;
 
+  transition: 0.2s ease-in-out;
+
   &:hover {
-    background: $snow;
+    background: $darkBlue;
+
+    * {
+      color: $lightGrey;
+    }
   }
 }
 
@@ -250,8 +257,7 @@
 }
 
 .search-results-cover-image {
-  width: rem-calc(48);
-  border-radius: rem-calc(4);
+  border-radius: 50%;
 }
 
 .search-results-author-grid {

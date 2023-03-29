@@ -11,6 +11,11 @@ import Image from 'next/image';
 import { useState } from 'react';
 import CardsPostsSkeleton from './skeletons/cards-posts-skeleton';
 import FeaturedPostsSkeleton from './skeletons/featured-posts-skeleton';
+import Modal from '@/components/modal';
+import SearchBox from '@/components/search-box';
+import SearchResults from '@/components/search/search-results';
+import ToolTips from '@/components/tooltips';
+import Svg from '@/components/svg';
 
 export default function Blog() {
   const [orderBy, setOrderBy] = useState<'CreatedAtDesc' | 'CreatedAtAsc'>(
@@ -48,6 +53,24 @@ export default function Blog() {
     },
   });
 
+  const { data: searchPosts } = useGetPostsQuery({
+    variables: {
+      orderBy: PostOrderByInput[orderBy],
+      coverTransformation: {
+        image: {
+          resize: {
+            width: 60,
+            height: 60,
+            fit: ImageFit.Crop,
+          },
+        },
+      },
+      where: {
+        _search: search,
+      },
+    },
+  });
+
   const { data: featuredPosts, loading: featuredPostsLoading } =
     useGetPostsQuery({
       variables: {
@@ -68,6 +91,16 @@ export default function Blog() {
         },
       },
     });
+
+  const toggleModal = () => {
+    setModal(!modal);
+    setSearch(null);
+    if (!modal) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  };
 
   const pageSize = dataPosts?.postsConnection.pageInfo.pageSize;
 
@@ -97,6 +130,59 @@ export default function Blog() {
 
   return (
     <>
+      {modal && (
+        <Modal align="flex-start" marginTop={80} flat>
+          <div>
+            <SearchBox
+              value={search == null ? '' : search}
+              placeholder="Search..."
+              onClick={() => {
+                setSearch(null);
+              }}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                if (e.target.value === '') {
+                  setSearch(null);
+                }
+              }}
+            />
+          </div>
+          <div className="search-results-wrapper">
+            <ul>
+              {searchPosts?.posts?.map((post) => {
+                return (
+                  <SearchResults
+                    key={post.id}
+                    title={post.title}
+                    slug={post.slug}
+                    excerpt={post.excerpt}
+                    coverImage={post.coverImage?.url}
+                    authorPicture={post.author?.picture?.url}
+                    authorName={post.author?.name}
+                    createdAt={formatDate(post.createdAt)}
+                    onClick={toggleModal}
+                  />
+                );
+              })}
+            </ul>
+          </div>
+          <div className="search-results-footer">
+            {searchPosts?.posts?.length !== 0 && (
+              <span>
+                {searchPosts?.posts?.length}{' '}
+                {searchPosts?.posts?.length === 1 ? 'Result' : 'Results'}
+              </span>
+            )}
+            <button
+              className="search-results-close-modal"
+              onClick={toggleModal}
+            >
+              Cancel
+            </button>
+          </div>
+        </Modal>
+      )}
+
       <div className="blog-hero-wrapper">
         <div className="container">
           {featuredPostsLoading ? (
@@ -129,6 +215,49 @@ export default function Blog() {
               }}
             />
           </div>
+        </div>
+      </div>
+
+      <div className="container">
+        <div className="post-card-actions">
+          <ToolTips
+            contentW={110}
+            content="ASC | DESC"
+            position="right"
+            offset={20}
+          >
+            <div>
+              <button
+                disabled={orderBy == 'CreatedAtDesc'}
+                onClick={() => setOrderBy('CreatedAtDesc')}
+              >
+                <Svg
+                  src="/assets/icons/sort-desc.svg"
+                  size={28}
+                  color="var(--darkBlue)"
+                />
+              </button>
+              <button
+                disabled={orderBy == 'CreatedAtAsc'}
+                onClick={() => setOrderBy('CreatedAtAsc')}
+              >
+                <Svg
+                  src="/assets/icons/sort-asc.svg"
+                  size={28}
+                  color="var(--darkBlue)"
+                />
+              </button>
+            </div>
+          </ToolTips>
+          <ToolTips content="Search" position="left" offset={20}>
+            <button onClick={toggleModal}>
+              <Svg
+                src="/assets/icons/search.svg"
+                size={28}
+                color="var(--darkBlue)"
+              />
+            </button>
+          </ToolTips>
         </div>
       </div>
 

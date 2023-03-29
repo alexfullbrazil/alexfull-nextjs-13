@@ -3,15 +3,17 @@ import styled, { css } from 'styled-components';
 import { ToolTipsProps } from './index';
 
 export const ToolTipsContent = styled.div<ToolTipsProps>`
-  background: var(--purple);
+  background: ${(props) =>
+    props.background ? props.background : 'var(--darkBlue)'};
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 5px 10px;
+  padding: 7px 15px;
   font-size: 13px;
   color: white;
-  border-radius: 4px;
+  border-radius: ${(props) =>
+    props.borderRadius ? props.borderRadius : '999px'};
   width: ${(props) => (props.contentW ? props.contentW + 'px' : 'fit-content')};
   height: ${(props) =>
     props.contentH ? props.contentH + 'px' : 'fit-content'};
@@ -65,9 +67,10 @@ export const ToolTipsContent = styled.div<ToolTipsProps>`
         &:after {
           top: 50%;
           right: 0;
-          margin-right: -5px;
+          margin-right: -3px;
           margin-top: -7px;
           transform: translateY(-50%);
+          border-radius: 0 4px;
         }
       }
     `}
@@ -83,9 +86,10 @@ export const ToolTipsContent = styled.div<ToolTipsProps>`
         &:after {
           top: 50%;
           left: 0;
-          margin-left: -5px;
+          margin-left: -3px;
           margin-top: -7px;
           transform: translateY(-50%);
+          border-radius: 0 4px;
         }
       }
     `}
@@ -95,7 +99,8 @@ export const ToolTipsContent = styled.div<ToolTipsProps>`
     position: absolute;
     width: 15px;
     height: 15px;
-    background: var(--purple);
+    background: ${(props) =>
+      props.background ? props.background : 'var(--darkBlue)'};
 
     transform-origin: center;
     z-index: -1;

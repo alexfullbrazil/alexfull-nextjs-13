@@ -65,6 +65,7 @@
 
   .portfolio-card-content {
     &.active {
+      opacity: 1;
       margin-bottom: 0;
     }
   }
@@ -77,7 +78,8 @@
   left: 0;
   background: white;
   padding: calc($globalGap * 2);
-  margin-bottom: rem-calc(-350);
+  margin-bottom: rem-calc(-100);
+  opacity: 0;
   transition: 0.2s cubic-bezier(0, 0.64, 0.6, 0.97);
   box-shadow: $globalShadow;
   border-radius: calc($globalRadius / 2);
