@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   ImageFit,
   PostOrderByInput,
@@ -6,15 +7,14 @@ import {
 import FeaturedPosts from '@/components/pages/blog/featured-posts';
 import { PostCard } from '@/components/pages/blog/post-card';
 import SearchResults from '@/components/pages/blog/search/search-results';
+import CardsPostsSkeleton from '@/components/pages/blog/skeletons/cards-posts-skeleton';
+import FeaturedPostsSkeleton from '@/components/pages/blog/skeletons/featured-posts-skeleton';
 import Modal from '@/components/shared/modal';
 import SearchBox from '@/components/shared/search-box';
 import Svg from '@/components/shared/svg';
 import ToolTips from '@/components/shared/tooltips';
 import { formatDate } from '@/utils/formatters';
 import Pagination from '@atlaskit/pagination';
-import { useState } from 'react';
-import CardsPostsSkeleton from '@/components/pages/blog/skeletons/cards-posts-skeleton';
-import FeaturedPostsSkeleton from '@/components/pages/blog/skeletons/featured-posts-skeleton';
 
 export default function Blog() {
   const [orderBy, setOrderBy] = useState<'CreatedAtDesc' | 'CreatedAtAsc'>(
@@ -94,11 +94,9 @@ export default function Blog() {
   const toggleModal = () => {
     setModal(!modal);
     setSearch(null);
-    if (!modal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    !modal
+      ? (document.body.style.overflow = 'hidden')
+      : (document.body.style.overflow = 'auto');
   };
 
   const pageSize = dataPosts?.postsConnection.pageInfo.pageSize;

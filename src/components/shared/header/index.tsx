@@ -13,38 +13,21 @@ export default function Header({ children }: HeaderProps) {
   const [social, setSocial] = useState<boolean>(false);
   const [ontop, setOntop] = useState<boolean>(true);
 
-  const toggleNavigation = () => {
-    setNavigation((prev) => !prev);
-  };
-
   const navigationRef = useRef(null);
   const socialRef = useRef(null);
 
+  const toggleNavigation = () => {
+    setNavigation(!navigation);
+  };
+
   const handleClickOutside = (e: { target: any }) => {
-    if (
-      navigationRef.current &&
-      typeof navigationRef.current.contains === 'function' &&
-      !navigationRef.current.contains(e.target)
-    ) {
-      setNavigation(false);
-    }
-    if (
-      socialRef.current &&
-      typeof socialRef.current.contains === 'function' &&
-      !socialRef.current.contains(e.target)
-    ) {
-      setSocial(false);
-    }
+    !navigationRef.current.contains(e.target) && setNavigation(false);
+    !socialRef.current.contains(e.target) && setSocial(false);
   };
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
-
-    if (scrollPosition === 0) {
-      setOntop(true);
-    } else {
-      setOntop(false);
-    }
+    scrollPosition === 0 ? setOntop(true) : setOntop(false);
   };
 
   useEffect(() => {
@@ -60,7 +43,7 @@ export default function Header({ children }: HeaderProps) {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  });
+  }, []);
 
   return (
     <>
@@ -118,7 +101,7 @@ export default function Header({ children }: HeaderProps) {
             <nav ref={socialRef} className="social-navigation-wrapper">
               <button
                 className="trigger-social-navigation"
-                onClick={() => setSocial((prev) => !prev)}
+                onClick={() => setSocial(!social)}
               >
                 <Svg
                   color="var(--darkBlue)"

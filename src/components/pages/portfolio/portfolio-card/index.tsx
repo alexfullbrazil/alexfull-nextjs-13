@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Modal from '@/components/shared/modal';
 import { YoutubeVideo } from '@/components/shared/youtube-video';
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
 import Svg from '@/components/shared/svg';
 
 interface PortfolioCardProps {
@@ -45,15 +45,13 @@ export function PortfolioCard({
   };
 
   const toggleContent = () => {
-    setContent((prev) => !prev);
+    setContent(!content);
   };
 
   useEffect(() => {
-    if (contentModal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+    contentModal
+      ? (document.body.style.overflow = 'hidden')
+      : (document.body.style.overflow = 'auto');
   }, [contentModal]);
 
   return (

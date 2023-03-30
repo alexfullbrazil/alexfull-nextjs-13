@@ -5,10 +5,6 @@ import Image from 'next/image';
 import Head from 'next/head';
 import Loading from '@/components/shared/loading';
 
-export const metadata = {
-  title: 'Next.js',
-};
-
 export default function Post() {
   const router = useRouter();
   const { slug } = router.query;

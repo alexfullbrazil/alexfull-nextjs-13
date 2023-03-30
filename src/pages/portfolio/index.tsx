@@ -1,20 +1,13 @@
+import { useState } from 'react';
 import { useGetPortfoliosQuery } from '@/@codegen/gql/types';
 import Svg from '@/components/shared/svg';
-import { useState } from 'react';
-
 import { PortfolioCard } from '@/components/pages/portfolio/portfolio-card';
-
 import CardsPortfoliosSkeleton from '@/components/pages/portfolio/skeleton/cards-portfolios-skeleton';
 
 export default function Portfolio() {
   const [category, setCategory] = useState<
-    'Animation' | 'Illustration Art' | 'Web/App' | 'Tutorial' | '3D Model'
+    'Animation' | 'Illustration Art' | 'Web/App' | 'Tutorial' | '3D Model' | ''
   >(undefined);
-  const [search, setSearch] = useState('' || null);
-  const [modal, setModal] = useState<boolean>(false);
-  const [skip, setSkip] = useState<number>(0);
-  const [skipSlider, setSkipSlider] = useState<number>(0);
-  const [first, setFirst] = useState<number>(3);
 
   const { data: dataPortfolios, loading: dataPortfoliosLoading } =
     useGetPortfoliosQuery({
