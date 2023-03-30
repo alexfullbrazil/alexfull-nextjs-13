@@ -5,13 +5,13 @@ import { ToolTipsProps } from './index';
 export const ToolTipsContent = styled.div<ToolTipsProps>`
   background: ${(props) =>
     props.background ? props.background : 'var(--darkBlue)'};
+  color: ${(props) => (props.color ? props.color : 'var(--snow)')};
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 7px 15px;
   font-size: 13px;
-  color: white;
   border-radius: ${(props) =>
     props.borderRadius ? props.borderRadius : '999px'};
   width: ${(props) => (props.contentW ? props.contentW + 'px' : 'fit-content')};
@@ -19,9 +19,10 @@ export const ToolTipsContent = styled.div<ToolTipsProps>`
     props.contentH ? props.contentH + 'px' : 'fit-content'};
   text-align: ${(props) => (props.textAlign ? props.textAlign : 'center')};
   opacity: ${(props) => (props.opacity ? props.opacity : 0)};
-  transition: 0.2s ease-in;
   pointer-events: none;
   font-family: var(--primaryFont);
+  font-weight: 700;
+  white-space: ${(props) => (props.textWrap ? props.textWrap : 'nowrap')};
 
   ${(props) =>
     props.position === 'top' &&

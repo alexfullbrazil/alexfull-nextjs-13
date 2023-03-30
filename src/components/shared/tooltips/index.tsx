@@ -4,6 +4,8 @@ import { ToolTipsContent, ToolTipsWrapper } from './styles';
 
 export interface ToolTipsProps {
   content?: string;
+  color?: string;
+  textWrap?: string;
   background?: string;
   borderRadius?: string;
   offset?: number | any;
@@ -21,6 +23,8 @@ export interface ToolTipsProps {
 
 export default function ToolTips({
   content,
+  color,
+  textWrap,
   background,
   borderRadius,
   offset,
@@ -47,6 +51,8 @@ export default function ToolTips({
         <ToolTipsContent
           offset={offset}
           background={background}
+          color={color}
+          textWrap={textWrap}
           borderRadius={borderRadius}
           opacity={opacity}
           className={className}
