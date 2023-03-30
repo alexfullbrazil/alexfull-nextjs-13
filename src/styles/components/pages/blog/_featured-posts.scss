@@ -1,9 +1,9 @@
 @import '@/styles/modules/root';
 
 .featured-tag {
-  background: $warning;
+  background: $danger;
   width: fit-content;
-  color: $darkBlue;
+  color: $snow;
   font-weight: bold;
   font-size: em-calc(13);
   padding: rem-calc(7 15);
@@ -22,7 +22,7 @@
 
 .featured-posts-title {
   margin-bottom: $globalGap;
-  color: $snow;
+  color: $darkBlue;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -34,8 +34,6 @@
 
 .featured-posts-excerpt {
   display: none;
-  color: $snow;
-  opacity: 0.55;
 
   @include md {
     margin-bottom: $globalGap * 2;
@@ -115,14 +113,11 @@
 .featured-posts-author-name {
   font-size: em-calc(16);
   font-weight: 600;
-  color: $snow;
 }
 
 .featured-posts-created-at {
   font-size: em-calc(13);
   text-transform: uppercase;
-  color: $snow;
-  opacity: 0.55;
 }
 
 .featured-posts-author-picture {

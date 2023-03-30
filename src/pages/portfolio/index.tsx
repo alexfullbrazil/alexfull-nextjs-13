@@ -3,6 +3,7 @@ import { useGetPortfoliosQuery } from '@/@codegen/gql/types';
 import Svg from '@/components/shared/svg';
 import { PortfolioCard } from '@/components/pages/portfolio/portfolio-card';
 import CardsPortfoliosSkeleton from '@/components/pages/portfolio/skeleton/cards-portfolios-skeleton';
+import ToolTips from '@/components/shared/tooltips';
 
 export default function Portfolio() {
   const [category, setCategory] = useState<
@@ -59,18 +60,30 @@ export default function Portfolio() {
               >
                 Tutorial
               </button>
+              <ToolTips
+                position="top"
+                content={category == undefined ? 'Select One' : 'Reset'}
+                offset={14}
+                // opacity={1}
+                background={
+                  category == undefined ? 'var(--danger)' : 'var(--warning)'
+                }
+                color={
+                  category == undefined ? 'var(--snow)' : 'var(--darkBlue)'
+                }
+              >
+                <button
+                  className={`reset ${category == undefined && 'disabled'}`}
+                  onClick={() => setCategory(undefined)}
+                >
+                  <Svg
+                    color="var(--snow)"
+                    size={22}
+                    src="/assets/icons/back-spin.svg"
+                  />
+                </button>
+              </ToolTips>
             </div>
-            <button
-              className={`reset ${category == undefined && 'disabled'}`}
-              onClick={() => setCategory(undefined)}
-            >
-              Reset Filter{' '}
-              <Svg
-                color="var(--darkBlue)"
-                size={22}
-                src="/assets/icons/back-spin.svg"
-              />
-            </button>
           </div>
         </div>
 

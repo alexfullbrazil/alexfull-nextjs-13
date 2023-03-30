@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $darkBlue;
+  background: $gradientBlue;
   color: $snow;
   margin-bottom: rem-calc(60);
   text-align: center;
@@ -37,28 +37,6 @@
       color: $warning;
     }
   }
-
-  .reset {
-    @include button-reset;
-    cursor: pointer;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $darkBlue;
-    padding: rem-calc(10 20);
-    border-radius: rem-calc(999);
-    gap: rem-calc(9);
-
-    transition: 0.3s ease;
-
-    background: $warning;
-    &.disabled {
-      background: $snow;
-      opacity: 0.2;
-      cursor: default;
-    }
-  }
 }
 
 .portfolio-category-filter-wrapper {
@@ -78,13 +56,65 @@
     padding: rem-calc(12 24);
     border-radius: rem-calc(999);
 
-    &.selected {
+    &:hover {
       background: $warning;
+    }
+
+    &.selected {
+      background: $danger;
+      color: $snow;
       cursor: default;
     }
-  }
 
-  :hover {
-    background: $warning;
+    &.reset {
+      @include button-reset;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $snow;
+      padding: rem-calc(10);
+      border-radius: rem-calc(999);
+      gap: rem-calc(9);
+
+      background: $danger;
+
+      &:hover {
+        background: $warning;
+
+        svg {
+          path {
+            fill: $darkBlue;
+          }
+        }
+
+        &.disabled {
+          &:hover {
+            background: $danger;
+
+            svg {
+              path {
+                fill: $snow;
+              }
+            }
+          }
+        }
+      }
+
+      // &.disabled {
+      //   opacity: 0.5;
+
+      //   &:hover {
+      //     background: $warning;
+
+      //     svg {
+      //       path {
+      //         fill: $darkBlue;
+      //       }
+      //     }
+      //   }
+      // }
+    }
   }
 }
