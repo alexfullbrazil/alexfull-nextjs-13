@@ -88,6 +88,15 @@ export default function Portfolio() {
         </div>
 
         <div className="container">
+          <div className="portfolio-filtered-title-wrapper">
+            <h2 className="portfolio-filtered-title">
+              {category === undefined ? 'Total' : category}
+            </h2>
+            <h2 className="portfolio-filtered-count">
+              {dataPortfolios.portfolios.length}
+            </h2>
+          </div>
+
           <div className="portfolio-card-wrapper">
             {dataPortfoliosLoading ? (
               <>

@@ -25,12 +25,12 @@
   padding: 0 $globalPadding;
 
   h1 {
-    font-size: rem-calc(28);
+    font-size: rem-calc(32);
     margin-bottom: rem-calc(24);
     max-width: rem-calc(720);
 
     @include md {
-      font-size: rem-calc(48);
+      font-size: rem-calc(58);
     }
 
     span {
@@ -101,20 +101,25 @@
           }
         }
       }
-
-      // &.disabled {
-      //   opacity: 0.5;
-
-      //   &:hover {
-      //     background: $warning;
-
-      //     svg {
-      //       path {
-      //         fill: $darkBlue;
-      //       }
-      //     }
-      //   }
-      // }
     }
   }
+}
+
+.portfolio-filtered-title-wrapper {
+  color: $darkBlue;
+  margin-bottom: rem-calc(52);
+  @include flex-centered;
+  flex-direction: row;
+}
+
+.portfolio-filtered-title {
+  color: $darkBlue;
+}
+.portfolio-filtered-count {
+  background: $danger;
+  padding: rem-calc(5 15);
+  border-radius: 999px 999px 999px 0;
+  color: $snow;
+  margin-left: calc($globalGap / 2);
+  margin-top: rem-calc(-20);
 }

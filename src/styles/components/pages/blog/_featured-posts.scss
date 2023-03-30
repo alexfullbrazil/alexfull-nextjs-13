@@ -30,6 +30,10 @@
   line-clamp: 3;
   -webkit-box-orient: vertical;
   font-size: em-calc(32);
+
+  &:hover {
+    color: lighten($color: $darkBlue, $amount: 15);
+  }
 }
 
 .featured-posts-excerpt {
