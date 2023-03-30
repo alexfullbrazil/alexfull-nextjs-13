@@ -63,6 +63,9 @@
     a {
       color: $darkBlue;
       font-weight: 600;
+      &.active-link {
+        color: red;
+      }
     }
   }
 }

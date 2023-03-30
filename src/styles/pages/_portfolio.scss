@@ -10,6 +10,10 @@
   margin-bottom: rem-calc(60);
   text-align: center;
   padding: rem-calc(80 0);
+
+  @include md {
+    padding: rem-calc(140 0);
+  }
 }
 
 .portfolio-hero-inner {

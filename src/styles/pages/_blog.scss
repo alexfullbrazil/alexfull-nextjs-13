@@ -1,8 +1,9 @@
 @import '@/styles/modules/root';
 
 .blog-hero-wrapper {
-  margin-top: rem-calc(100);
-  padding-bottom: calc($globalGap * 3);
+  padding: calc($globalGap * 3) 0;
+  background: $darkBlue;
+  margin-bottom: rem-calc(28);
 }
 
 .pagination-wrapper {

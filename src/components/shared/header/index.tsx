@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
-
+import { useRouter } from 'next/router';
 import Svg from '@/components/shared/svg';
 import Link from 'next/link';
 interface HeaderProps {
@@ -12,6 +12,7 @@ export default function Header({ children }: HeaderProps) {
   const [navigation, setNavigation] = useState<boolean>(false);
   const [social, setSocial] = useState<boolean>(false);
   const [ontop, setOntop] = useState<boolean>(true);
+  const [activeLink, setActiveLink] = useState<boolean>(false);
 
   const navigationRef = useRef(null);
   const socialRef = useRef(null);

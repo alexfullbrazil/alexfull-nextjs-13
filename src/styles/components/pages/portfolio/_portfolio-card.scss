@@ -34,7 +34,7 @@
 
   a {
     display: flex;
-    background: $darkBlue;
+    background: $warning;
     color: $snow;
     padding: rem-calc(10 20);
     margin-top: rem-calc(18);
@@ -47,7 +47,7 @@
   .porfolio-card-button {
     @include button-reset;
     display: flex;
-    background: $darkBlue;
+    background: $danger;
     color: $snow;
     padding: rem-calc(10 20);
     margin-top: rem-calc(18);
@@ -100,7 +100,7 @@
   align-items: center;
   justify-content: center;
   background: $warning;
-  color: white;
+  color: $snow;
   border-radius: calc($globalRadius / 2) 0;
   width: rem-calc(38);
   height: rem-calc(38);
