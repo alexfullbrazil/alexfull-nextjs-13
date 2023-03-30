@@ -19,9 +19,9 @@
 
 .post-title {
   font-size: em-calc(28);
-  margin-bottom: calc($globalGap * 2);
+  margin-bottom: calc($global-gap * 2);
   line-height: 1.2;
-  color: $darkBlue;
+  color: $dark-blue;
 
   @include lg {
     font-size: em-calc(42);
@@ -31,7 +31,7 @@
 .post-excerpt {
   font-size: em-calc(18);
   font-weight: 400;
-  margin-bottom: calc($globalGap * 2);
+  margin-bottom: calc($global-gap * 2);
   line-height: 1.4;
 
   @include lg {
@@ -43,7 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: calc($globalGap * 2);
+  margin-bottom: calc($global-gap * 2);
 }
 
 .post-author-picture {
@@ -55,15 +55,15 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: $globalGap;
+  gap: $global-gap;
 }
 
 .post-cover-image {
   width: 100%;
   height: auto;
-  border-radius: calc($globalRadius / 2);
+  border-radius: calc($global-radius / 2);
 
   @include lg {
-    margin-bottom: calc($globalGap * 2);
+    margin-bottom: calc($global-gap * 2);
   }
 }

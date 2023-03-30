@@ -8,12 +8,12 @@
   font-size: em-calc(13);
   padding: rem-calc(7 15);
   border-radius: 999px;
-  margin-bottom: $globalGap;
+  margin-bottom: $global-gap;
 }
 
 .featured-posts-wrapper {
   display: grid;
-  grid-gap: $globalGap;
+  grid-gap: $global-gap;
 
   @include lg {
     grid-template-columns: 1fr 2fr;
@@ -21,8 +21,8 @@
 }
 
 .featured-posts-title {
-  margin-bottom: $globalGap;
-  color: $darkBlue;
+  margin-bottom: $global-gap;
+  color: $dark-blue;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -32,7 +32,7 @@
   font-size: em-calc(32);
 
   &:hover {
-    color: lighten($color: $darkBlue, $amount: 15);
+    color: lighten($color: $dark-blue, $amount: 15);
   }
 }
 
@@ -40,7 +40,7 @@
   display: none;
 
   @include md {
-    margin-bottom: $globalGap * 2;
+    margin-bottom: $global-gap * 2;
     font-size: em-calc(20);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -93,7 +93,7 @@
   align-items: center;
   justify-content: space-between;
   height: rem-calc(40);
-  margin-bottom: $globalGap;
+  margin-bottom: $global-gap;
   position: relative;
 
   button {
@@ -111,7 +111,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: $globalGap;
+  gap: $global-gap;
 }
 
 .featured-posts-author-name {
@@ -138,7 +138,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: $globalGap;
+  margin-top: $global-gap;
 
   button {
     max-width: rem-calc(22);

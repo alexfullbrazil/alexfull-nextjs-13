@@ -18,7 +18,7 @@
 }
 
 :root {
-  font-family: $primaryFont;
+  font-family: $primary-font;
   font-weight: 400;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -28,21 +28,21 @@
 
   color: $grey;
 
-  --globalGap: #{$globalGap};
-  --globalPadding: #{$globalGap};
-  --globalRadius: #{$globalRadius};
+  --globalGap: #{$global-gap};
+  --globalPadding: #{$global-gap};
+  --globalRadius: #{$global-radius};
   --globalShadow: 0px 0px 18px 10px rgba(0, 0, 0, 0.05);
 
-  --siteWidth: #{$siteWidth};
+  --siteWidth: #{$site-width};
 
-  --primaryFont: #{$primaryFont};
-  --headingFont: #{$headingFont};
+  --primaryFont: #{$primary-font};
+  --headingFont: #{$heading-font};
 
   --purple: #{$purple};
-  --darkBlue: #{$darkBlue};
+  --darkBlue: #{$dark-blue};
   --black: #{$black};
   --grey: #{$grey};
-  --lightGrey: #{$lightGrey};
+  --lightGrey: #{$light-grey};
   --snow: #{$snow};
   --danger: #{$danger};
   --success: #{$success};
@@ -54,7 +54,7 @@
   h4,
   h5,
   h6 {
-    font-family: $headingFont;
+    font-family: $heading-font;
   }
 }
 
@@ -63,7 +63,7 @@ a {
 }
 
 p {
-  margin-bottom: $globalGap;
+  margin-bottom: $global-gap;
 }
 
 .site-wrapper {
@@ -73,7 +73,7 @@ p {
 
 .container {
   width: 100%;
-  max-width: $siteWidth;
+  max-width: $site-width;
   margin: 0 auto;
-  padding: 0 $globalGap;
+  padding: 0 $global-gap;
 }

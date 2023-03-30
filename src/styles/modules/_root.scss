@@ -4,12 +4,12 @@
 @import 'mixins';
 @import 'utils';
 
-$globalGap: rem-calc(18);
-$globalPadding: $globalGap;
-$globalRadius: rem-calc(18);
-$globalShadow: 0px 0px rem-calc(18) rem-calc(10) rgba(0, 0, 0, 0.05);
+$global-gap: rem-calc(18);
+$global-padding: $global-gap;
+$global-radius: rem-calc(18);
+$global-shadow: 0px 0px rem-calc(18) rem-calc(10) rgba(0, 0, 0, 0.05);
 
-$siteWidth: rem-calc(1200);
+$site-width: rem-calc(1200);
 
-$primaryFont: 'Inter', sans-serif;
-$headingFont: 'Plus Jakarta Sans', sans-serif;
+$primary-font: 'Inter', sans-serif;
+$heading-font: 'Plus Jakarta Sans', sans-serif;

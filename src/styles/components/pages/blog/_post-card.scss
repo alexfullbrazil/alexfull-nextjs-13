@@ -2,7 +2,7 @@
 
 .post-card-wrapper {
   display: grid;
-  grid-gap: calc($globalGap * 2);
+  grid-gap: calc($global-gap * 2);
 
   @include md {
     grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: space-between;
   height: rem-calc(40);
-  margin-bottom: $globalGap;
+  margin-bottom: $global-gap;
   position: relative;
 
   button {
@@ -32,13 +32,13 @@
 .post-card-item {
   overflow: hidden;
 
-  padding-bottom: calc($globalGap * 2);
+  padding-bottom: calc($global-gap * 2);
 }
 
 .post-card-title {
   font-size: em-calc(22);
-  margin-bottom: $globalGap;
-  color: $darkBlue;
+  margin-bottom: $global-gap;
+  color: $dark-blue;
   line-height: 1.2;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -48,13 +48,13 @@
   -webkit-box-orient: vertical;
 
   &:hover {
-    color: lighten($color: $darkBlue, $amount: 15);
+    color: lighten($color: $dark-blue, $amount: 15);
   }
 }
 
 .post-card-excerpt {
   line-height: 1.5;
-  margin-bottom: $globalGap * 2;
+  margin-bottom: $global-gap * 2;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -69,7 +69,7 @@
   justify-content: space-between;
 
   @include md {
-    padding: $globalGap;
+    padding: $global-gap;
   }
 }
 
@@ -97,7 +97,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: $globalGap;
+  gap: $global-gap;
 }
 
 .post-card-author-name {
@@ -116,7 +116,7 @@
 
 .post-card-read-more {
   display: flex;
-  background: $darkBlue;
+  background: $dark-blue;
   color: $snow;
   padding: rem-calc(10 20);
   margin-top: rem-calc(18);
@@ -126,6 +126,6 @@
   font-size: rem-calc(14);
 
   &:hover {
-    background: lighten($color: $darkBlue, $amount: 15);
+    background: lighten($color: $dark-blue, $amount: 15);
   }
 }

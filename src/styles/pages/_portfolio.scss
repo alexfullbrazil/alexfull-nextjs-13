@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $gradientBlue;
+  background: $gradient-blue;
   color: $snow;
   margin-bottom: rem-calc(60);
   text-align: center;
@@ -22,7 +22,7 @@
   justify-content: center;
   flex-direction: column;
 
-  padding: 0 $globalPadding;
+  padding: 0 $global-padding;
 
   h1 {
     font-size: rem-calc(32);
@@ -43,7 +43,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $globalGap;
+  gap: $global-gap;
   flex-wrap: wrap;
   margin: rem-calc(36 0);
 
@@ -52,7 +52,7 @@
     cursor: pointer;
     font-weight: bold;
     background: $snow;
-    color: $darkBlue;
+    color: $dark-blue;
     padding: rem-calc(12 24);
     border-radius: rem-calc(999);
 
@@ -85,7 +85,7 @@
 
         svg {
           path {
-            fill: $darkBlue;
+            fill: $dark-blue;
           }
         }
 
@@ -106,20 +106,20 @@
 }
 
 .portfolio-filtered-title-wrapper {
-  color: $darkBlue;
+  color: $dark-blue;
   margin-bottom: rem-calc(52);
   @include flex-centered;
   flex-direction: row;
 }
 
 .portfolio-filtered-title {
-  color: $darkBlue;
+  color: $dark-blue;
 }
 .portfolio-filtered-count {
   background: $danger;
   padding: rem-calc(5 15);
   border-radius: 999px 999px 999px 0;
   color: $snow;
-  margin-left: calc($globalGap / 2);
+  margin-left: calc($global-gap / 2);
   margin-top: rem-calc(-20);
 }

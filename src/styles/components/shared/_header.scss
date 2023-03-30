@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: center;
   margin-bottom: rem-calc(40);
-  box-shadow: $globalShadow;
+  box-shadow: $global-shadow;
   background: white;
   height: rem-calc(65);
   transition: 0.2s ease-in-out;
@@ -42,9 +42,9 @@
   align-items: center;
   justify-content: center;
   background: white;
-  box-shadow: $globalShadow;
+  box-shadow: $global-shadow;
   z-index: 1;
-  padding: calc($globalPadding * 2);
+  padding: calc($global-padding * 2);
 
   transition: 0.3s cubic-bezier(0, 0.64, 0.6, 0.97);
 
@@ -57,11 +57,11 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: $globalGap;
+    gap: $global-gap;
     list-style: none;
 
     a {
-      color: $darkBlue;
+      color: $dark-blue;
       font-weight: 700;
       &.active-link {
         color: red;
@@ -85,7 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: calc($globalGap / 2);
+  gap: calc($global-gap / 2);
   margin-right: rem-calc(30);
   opacity: 0;
   transition: 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);

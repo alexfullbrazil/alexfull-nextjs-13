@@ -2,7 +2,7 @@
 
 .portfolio-card-wrapper {
   display: grid;
-  grid-gap: calc($globalGap * 3);
+  grid-gap: calc($global-gap * 3);
 
   @include md {
     grid-template-columns: repeat(auto-fill, minmax(295px, 1fr));
@@ -17,8 +17,8 @@
   align-items: center;
   justify-content: center;
 
-  border-radius: calc($globalRadius / 2);
-  box-shadow: $globalShadow;
+  border-radius: calc($global-radius / 2);
+  box-shadow: $global-shadow;
 
   img {
     width: 100%;
@@ -59,7 +59,7 @@
 
     &:hover {
       background: $warning;
-      color: $darkBlue;
+      color: $dark-blue;
     }
   }
 
@@ -77,12 +77,12 @@
   bottom: 0;
   left: 0;
   background: white;
-  padding: calc($globalGap * 2);
+  padding: calc($global-gap * 2);
   margin-bottom: rem-calc(-100);
   opacity: 0;
   transition: 0.2s cubic-bezier(0, 0.64, 0.6, 0.97);
-  box-shadow: $globalShadow;
-  border-radius: calc($globalRadius / 2);
+  box-shadow: $global-shadow;
+  border-radius: calc($global-radius / 2);
 
   video {
     width: 100% !important;
@@ -101,14 +101,14 @@
   justify-content: center;
   background: $warning;
   color: $snow;
-  border-radius: calc($globalRadius / 2) 0;
+  border-radius: calc($global-radius / 2) 0;
   width: rem-calc(38);
   height: rem-calc(38);
 }
 
 .portfolio-card-title {
   h2 {
-    color: $darkBlue;
+    color: $dark-blue;
     font-size: em-calc(22);
     margin-bottom: rem-calc(12);
   }

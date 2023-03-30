@@ -2,7 +2,7 @@
 
 .blog-hero-wrapper {
   margin-top: rem-calc(100);
-  padding-bottom: calc($globalGap * 3);
+  padding-bottom: calc($global-gap * 3);
 }
 
 .pagination-wrapper {
@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin: calc($globalGap * 2) 0;
+  margin: calc($global-gap * 2) 0;
 
   button {
     margin: 0 4px;
