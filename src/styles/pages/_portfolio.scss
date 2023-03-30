@@ -21,9 +21,13 @@
   padding: 0 $globalPadding;
 
   h1 {
-    font-size: rem-calc(48);
+    font-size: rem-calc(28);
     margin-bottom: rem-calc(24);
     max-width: rem-calc(720);
+
+    @include md {
+      font-size: rem-calc(48);
+    }
 
     span {
       color: $warning;

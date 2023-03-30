@@ -6,7 +6,11 @@
   width: 100%;
   max-width: rem-calc(768);
   margin: 0 auto;
-  padding-top: rem-calc(60);
+  padding-top: rem-calc(30);
+
+  @include md {
+    padding-top: rem-calc(60);
+  }
 }
 
 .post-header {

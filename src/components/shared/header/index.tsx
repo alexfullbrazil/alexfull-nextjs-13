@@ -18,6 +18,7 @@ export default function Header({ children }: HeaderProps) {
   };
 
   const navigationRef = useRef(null);
+  const socialRef = useRef(null);
 
   const handleClickOutside = (e: { target: any }) => {
     if (
@@ -27,12 +28,19 @@ export default function Header({ children }: HeaderProps) {
     ) {
       setNavigation(false);
     }
+    if (
+      socialRef.current &&
+      typeof socialRef.current.contains === 'function' &&
+      !socialRef.current.contains(e.target)
+    ) {
+      setSocial(false);
+    }
   };
 
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
 
-    if (scrollPosition <= 50) {
+    if (scrollPosition === 0) {
       setOntop(true);
     } else {
       setOntop(false);
@@ -79,7 +87,7 @@ export default function Header({ children }: HeaderProps) {
         </ul>
       </nav>
       <div
-        className={`header-wrapper ${navigation ? 'show-navigation' : ''}${
+        className={`header-wrapper ${navigation ? 'show-navigation' : ''} ${
           ontop ? 'on-top' : ''
         }`}
       >
@@ -107,7 +115,7 @@ export default function Header({ children }: HeaderProps) {
               )}
             </div>
 
-            <nav className="social-navigation-wrapper">
+            <nav ref={socialRef} className="social-navigation-wrapper">
               <button
                 className="trigger-social-navigation"
                 onClick={() => setSocial((prev) => !prev)}

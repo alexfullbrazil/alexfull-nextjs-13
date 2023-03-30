@@ -1,10 +1,15 @@
 @import '@/styles/modules/root';
+
 @import '@/styles/pages/blog';
 @import '@/styles/pages/post';
 @import '@/styles/pages/portfolio';
 @import '@/styles/pages/404';
-@import '@/styles/components/header';
-@import '@/styles/components/portfolio-card';
+
+@import '@/styles/components/shared/header';
+@import '@/styles/components/pages/portfolio/portfolio-card';
+@import '@/styles/components/pages/blog/search-results';
+@import '@/styles/components/pages/blog/featured-posts';
+@import '@/styles/components/pages/blog/post-card';
 
 * {
   margin: 0;
@@ -33,7 +38,6 @@
   --primaryFont: #{$primaryFont};
   --headingFont: #{$headingFont};
 
-  // colors
   --purple: #{$purple};
   --darkBlue: #{$darkBlue};
   --black: #{$black};
@@ -64,6 +68,7 @@ p {
 
 .site-wrapper {
   margin-top: rem-calc(64);
+  padding-bottom: rem-calc(80);
 }
 
 .container {

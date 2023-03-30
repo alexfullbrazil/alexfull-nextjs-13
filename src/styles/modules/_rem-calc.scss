@@ -1,4 +1,4 @@
-@use "sass:math";
+@use 'sass:math';
 
 $rem-base: 16px !default;
 
@@ -23,14 +23,16 @@ $rem-base: 16px !default;
     @return convert-to-rem(nth($values, 1), $base-value);
   }
 
-  $remValues: (
-  );
+  $remValues: ();
 
-@for $i from 1 through $max {
-  $remValues: append($remValues, convert-to-rem(nth($values, $i), $base-value));
-}
+  @for $i from 1 through $max {
+    $remValues: append(
+      $remValues,
+      convert-to-rem(nth($values, $i), $base-value)
+    );
+  }
 
-@return $remValues;
+  @return $remValues;
 }
 
 @function em-calc($values) {
@@ -42,12 +44,11 @@ $rem-base: 16px !default;
     @return strip-unit(nth($remValues, 1)) * 1em;
   }
 
-  $emValues: (
-  );
+  $emValues: ();
 
-@for $i from 1 through $max {
-  $emValues: append($emValues, strip-unit(nth($remValues, $i)) * 1em);
-}
+  @for $i from 1 through $max {
+    $emValues: append($emValues, strip-unit(nth($remValues, $i)) * 1em);
+  }
 
-@return $emValues;
+  @return $emValues;
 }
