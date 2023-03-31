@@ -80,7 +80,7 @@ export default function Header({ children }: HeaderProps) {
             <div>
               {navigation ? (
                 <Svg
-                  color="var(--darkBlue)"
+                  color="var(--dark-blue)"
                   size={32}
                   src="/assets/icons/clear.svg"
                   onClick={() => setNavigation(false)}
@@ -89,7 +89,7 @@ export default function Header({ children }: HeaderProps) {
               ) : (
                 <>
                   <Svg
-                    color="var(--darkBlue)"
+                    color="var(--dark-blue)"
                     size={32}
                     src="/assets/icons/menu.svg"
                     onClick={toggleNavigation}
@@ -105,7 +105,7 @@ export default function Header({ children }: HeaderProps) {
                 onClick={() => setSocial(!social)}
               >
                 <Svg
-                  color="var(--darkBlue)"
+                  color="var(--dark-blue)"
                   size={iconSize}
                   src="/assets/icons/share.svg"
                 />
@@ -117,7 +117,7 @@ export default function Header({ children }: HeaderProps) {
                     href="https://www.behance.net/alexfullbrazil"
                   >
                     <Svg
-                      color="var(--darkBlue)"
+                      color="var(--dark-blue)"
                       size={iconSize}
                       src="/assets/icons/behance.svg"
                     />
@@ -129,7 +129,7 @@ export default function Header({ children }: HeaderProps) {
                     href="https://www.instagram.com/alexfullbrazil/"
                   >
                     <Svg
-                      color="var(--darkBlue)"
+                      color="var(--dark-blue)"
                       size={iconSize}
                       src="/assets/icons/instagram.svg"
                     />
@@ -141,7 +141,7 @@ export default function Header({ children }: HeaderProps) {
                     href="https://www.linkedin.com/in/alexfullbrazil/"
                   >
                     <Svg
-                      color="var(--darkBlue)"
+                      color="var(--dark-blue)"
                       size={iconSize}
                       src="/assets/icons/linkedin.svg"
                     />
@@ -150,7 +150,7 @@ export default function Header({ children }: HeaderProps) {
                 <li>
                   <a target="_blanc" href="https://github.com/alexfullbrazil">
                     <Svg
-                      color="var(--darkBlue)"
+                      color="var(--dark-blue)"
                       size={iconSize}
                       src="/assets/icons/github.svg"
                     />

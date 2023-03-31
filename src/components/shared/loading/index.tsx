@@ -12,7 +12,7 @@ export default function Loading({ info }: LoadingProps) {
         <Svg
           size={32}
           src="/assets/icons/spinner.svg"
-          color="var(--darkBlue)"
+          color="var(--dark-blue)"
         />
       </Spin>
       <Info>{info}</Info>

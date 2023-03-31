@@ -13,7 +13,7 @@ export const ModalWrapper = styled.div<ModalProps>`
   display: flex;
   align-items: ${(props) => (props.align ? props.align : 'center')};
   justify-content: center;
-  padding: var(--globalGap);
+  padding: var(--global-gap);
 
   ${(props) =>
     props.flat &&
@@ -33,7 +33,7 @@ export const ModalContainer = styled.div<ModalProps>`
   background: white;
   margin-top: ${(props) =>
     props.marginTop ? props.marginTop + 'px' : 0 + 'px'};
-  padding: var(--globalGap);
+  padding: var(--global-gap);
   box-shadow: var(--globalShadow);
   border-radius: var(--globalRadius);
 

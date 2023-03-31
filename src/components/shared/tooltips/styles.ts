@@ -4,7 +4,7 @@ import { ToolTipsProps } from './index';
 
 export const ToolTipsContent = styled.div<ToolTipsProps>`
   background: ${(props) =>
-    props.background ? props.background : 'var(--darkBlue)'};
+    props.background ? props.background : 'var(--dark-blue)'};
   color: ${(props) => (props.color ? props.color : 'var(--snow)')};
   position: absolute;
   top: 50%;
@@ -101,7 +101,7 @@ export const ToolTipsContent = styled.div<ToolTipsProps>`
     width: 15px;
     height: 15px;
     background: ${(props) =>
-      props.background ? props.background : 'var(--darkBlue)'};
+      props.background ? props.background : 'var(--dark-blue)'};
 
     transform-origin: center;
     z-index: -1;

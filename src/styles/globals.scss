@@ -28,21 +28,21 @@
 
   color: $grey;
 
-  --globalGap: #{$global-gap};
-  --globalPadding: #{$global-gap};
+  --global-gap: #{$global-gap};
+  --global-padding: #{$global-gap};
   --globalRadius: #{$global-radius};
   --globalShadow: 0px 0px 18px 10px rgba(0, 0, 0, 0.05);
 
-  --siteWidth: #{$site-width};
+  --site-width: #{$site-width};
 
-  --primaryFont: #{$primary-font};
-  --headingFont: #{$heading-font};
+  --primary-font: #{$primary-font};
+  --heading-font: #{$heading-font};
 
   --purple: #{$purple};
-  --darkBlue: #{$dark-blue};
+  --dark-blue: #{$dark-blue};
   --black: #{$black};
   --grey: #{$grey};
-  --lightGrey: #{$light-grey};
+  --light-grey: #{$light-grey};
   --snow: #{$snow};
   --danger: #{$danger};
   --success: #{$success};

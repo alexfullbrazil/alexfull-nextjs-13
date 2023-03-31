@@ -64,7 +64,6 @@ export default function Portfolio() {
                 position="top"
                 content={category == undefined ? 'Select One' : 'Reset'}
                 offset={14}
-                // opacity={1}
                 background={
                   category == undefined ? 'var(--danger)' : 'var(--warning)'
                 }

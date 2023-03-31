@@ -231,7 +231,7 @@ export default function Blog() {
                 <Svg
                   src="/assets/icons/sort-desc.svg"
                   size={28}
-                  color="var(--darkBlue)"
+                  color="var(--dark-blue)"
                 />
               </button>
               <button
@@ -241,7 +241,7 @@ export default function Blog() {
                 <Svg
                   src="/assets/icons/sort-asc.svg"
                   size={28}
-                  color="var(--darkBlue)"
+                  color="var(--dark-blue)"
                 />
               </button>
             </div>
@@ -251,7 +251,7 @@ export default function Blog() {
               <Svg
                 src="/assets/icons/search.svg"
                 size={28}
-                color="var(--darkBlue)"
+                color="var(--dark-blue)"
               />
             </button>
           </ToolTips>

@@ -27,12 +27,16 @@ export default function SearchBox({
             src="/assets/icons/clear.svg"
             onClick={onClick}
             size={38}
-            color="var(--darkBlue)"
+            color="var(--dark-blue)"
             cursor="pointer"
           />
         </ToolTips>
       ) : (
-        <Svg src="/assets/icons/search.svg" size={38} color="var(--darkBlue)" />
+        <Svg
+          src="/assets/icons/search.svg"
+          size={38}
+          color="var(--dark-blue)"
+        />
       )}
       <input
         autoFocus

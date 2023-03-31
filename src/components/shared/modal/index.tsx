@@ -31,7 +31,7 @@ export default function Modal({
             <CloseButton onClick={onClick}>
               <Svg
                 src="/assets/icons/clear.svg"
-                color="var(--darkBlue)"
+                color="var(--dark-blue)"
                 size={38}
               />
             </CloseButton>

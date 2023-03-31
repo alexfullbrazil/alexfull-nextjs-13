@@ -5,7 +5,7 @@ import { SkeletonGridProps, SkeletonColProps, SkeletonBoxProps } from './index';
 export const SkeletonGridWrapper = styled.div<SkeletonGridProps>`
   display: flex;
   width: 100%;
-  gap: ${(props) => (props.gap ? props.gap + 'px' : 'var(--globalGap)')};
+  gap: ${(props) => (props.gap ? props.gap + 'px' : 'var(--global-gap)')};
   height: ${(props) => (props.height ? props.height + 'px' : '')};
 `;
 

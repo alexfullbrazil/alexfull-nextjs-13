@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="not-found-wrapper">
       <div>
-        <Svg src="/assets/404/oh.svg" width={150} color="var(--darkBlue)" />
+        <Svg src="/assets/404/oh.svg" width={150} color="var(--dark-blue)" />
       </div>
       <div>
         <Image
@@ -21,7 +21,7 @@ export default function NotFound() {
         <Svg
           src="/assets/404/not-found.svg"
           width={150}
-          color="var(--darkBlue)"
+          color="var(--dark-blue)"
         />
         <Link href="/">
           <Svg src="/assets/404/back.svg" width={150} />
