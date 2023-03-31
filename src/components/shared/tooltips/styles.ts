@@ -24,6 +24,8 @@ export const ToolTipsContent = styled.div<ToolTipsProps>`
   font-weight: 700;
   white-space: ${(props) => (props.textWrap ? props.textWrap : 'nowrap')};
 
+  transition: 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+
   ${(props) =>
     props.position === 'top' &&
     css`
@@ -102,7 +104,6 @@ export const ToolTipsContent = styled.div<ToolTipsProps>`
     height: 15px;
     background: ${(props) =>
       props.background ? props.background : 'var(--dark-blue)'};
-
     transform-origin: center;
     z-index: -1;
     transform: rotate(-45deg);

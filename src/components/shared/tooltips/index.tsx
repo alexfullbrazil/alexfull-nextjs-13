@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { ToolTipsContent, ToolTipsWrapper } from './styles';
 
 export interface ToolTipsProps {
-  content?: string;
+  content: string;
   color?: string;
   textWrap?: string;
   background?: string;
@@ -18,7 +18,7 @@ export interface ToolTipsProps {
   opacity?: number;
   zIndex?: number;
   children?: ReactNode;
-  position?: 'top' | 'right' | 'bottom' | 'left';
+  position: 'top' | 'right' | 'bottom' | 'left';
 }
 
 export default function ToolTips({
@@ -46,9 +46,11 @@ export default function ToolTips({
         zIndex={zIndex}
         height={height}
         width={width}
+        content={content}
       >
         {children}
         <ToolTipsContent
+          content={content}
           offset={offset}
           background={background}
           color={color}

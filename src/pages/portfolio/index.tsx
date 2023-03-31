@@ -68,7 +68,9 @@ export default function Portfolio() {
                   category === undefined ? 'var(--danger)' : 'var(--warning)'
                 }
                 color={
-                  category === undefined ? 'var(--snow)' : 'var(--darkBlue)'
+                  category === undefined
+                    ? 'var(--dark-blue)'
+                    : 'var(--dark-blue)'
                 }
               >
                 <button

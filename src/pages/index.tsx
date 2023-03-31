@@ -1,4 +1,5 @@
 import Svg from '@/components/shared/svg';
+import ToolTips from '@/components/shared/tooltips';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -13,18 +14,58 @@ export default function Home() {
       <main className="page-home-wrapper">
         <div className="home-hero-wrapper">
           <div className="home-hero-content">
-            <h1>A FullStack App with Hygraph, Next.JS & Apollo GraphQL</h1>
+            <h1>A FullStack App with Hygraph, Next.JS 13 & Apollo GraphQL</h1>
             <p>
-              Featuring Instant GraphQL content APIs, Graph Code Generator,
-              Custom Components, auto convert Pixel to REM/EM and much more.
+              Featuring Hygraph, a Native GraphQL Headless CMS, GraphQL Code
+              Generator, Awesome Custom Components, SCSS Auto Convert Pixel to
+              REM/EM and much more.
             </p>
             <Link href={'/blog'} className="home-hero-cta">
               See in action
             </Link>
             <div className="home-hero-logos-wrapper">
-              <Svg color="var(--dark-blue)" src="assets/logos/next.svg" />
-              <Svg color="var(--dark-blue)" src="assets/logos/hygraph.svg" />
-              <Svg color="var(--dark-blue)" src="assets/logos/apollo.svg" />
+              <ToolTips
+                content="Learn More ->"
+                position="top"
+                offset={20}
+                background={'var(--danger)'}
+              >
+                <a target={'_blank'} href="https://nextjs.org/">
+                  <Svg
+                    height={50}
+                    color="var(--dark-blue)"
+                    src="assets/logos/next.svg"
+                  />
+                </a>
+              </ToolTips>
+              <ToolTips
+                content="Learn More ->"
+                position="top"
+                offset={20}
+                background={'var(--danger)'}
+              >
+                <a target={'_blank'} href="https://hygraph.com/">
+                  <Svg
+                    color="var(--dark-blue)"
+                    src="assets/logos/hygraph.svg"
+                  />
+                </a>
+              </ToolTips>
+
+              <ToolTips
+                content="Learn More ->"
+                position="top"
+                offset={20}
+                background={'var(--danger)'}
+              >
+                <a target={'_blank'} href="https://www.apollographql.com/">
+                  <Svg
+                    height={50}
+                    color="var(--dark-blue)"
+                    src="assets/logos/apollo.svg"
+                  />
+                </a>
+              </ToolTips>
             </div>
           </div>
         </div>
