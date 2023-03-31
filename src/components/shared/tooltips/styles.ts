@@ -26,6 +26,10 @@ export const ToolTipsContent = styled.div<ToolTipsProps>`
 
   transition: 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
 
+  &:after {
+    transition: 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+  }
+
   ${(props) =>
     props.position === 'top' &&
     css`

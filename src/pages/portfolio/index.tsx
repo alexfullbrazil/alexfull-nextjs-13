@@ -26,8 +26,9 @@ export default function Portfolio() {
           <div className="portfolio-hero-inner">
             <h1>
               A small <span>collection</span> of works with my{' '}
-              <span>skills</span>.
+              <span>skills</span>
             </h1>
+            <p>*Some content may have been changed by customers.</p>
 
             <div className="portfolio-category-filter-wrapper">
               <button
@@ -68,9 +69,7 @@ export default function Portfolio() {
                   category === undefined ? 'var(--danger)' : 'var(--warning)'
                 }
                 color={
-                  category === undefined
-                    ? 'var(--dark-blue)'
-                    : 'var(--dark-blue)'
+                  category === undefined ? 'var(--snow)' : 'var(--dark-blue)'
                 }
               >
                 <button
@@ -85,19 +84,18 @@ export default function Portfolio() {
                 </button>
               </ToolTips>
             </div>
+            <div className="portfolio-filtered-result-wrapper">
+              <h2 className="portfolio-filtered-title">
+                {category === undefined ? 'Total' : category}
+              </h2>
+              <h2 className="portfolio-filtered-count">
+                {dataPortfolios?.portfolios.length}
+              </h2>
+            </div>
           </div>
         </div>
 
         <div className="container">
-          <div className="portfolio-filtered-title-wrapper">
-            <h2 className="portfolio-filtered-title">
-              {category === undefined ? 'Total' : category}
-            </h2>
-            <h2 className="portfolio-filtered-count">
-              {dataPortfolios?.portfolios.length}
-            </h2>
-          </div>
-
           <div className="portfolio-card-wrapper">
             {dataPortfoliosLoading ? (
               <>
