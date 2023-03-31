@@ -38,7 +38,9 @@ export default function Post() {
   return (
     <>
       <Head>
-        <title>{dataPost?.post.title}</title>
+        <title>
+          {process.env.NEXT_PUBLIC_SITE_NAME} | {dataPost?.post.title}
+        </title>
         <meta name="description" content={dataPost?.post?.excerpt} />
       </Head>
 

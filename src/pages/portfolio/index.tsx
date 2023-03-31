@@ -4,6 +4,7 @@ import Svg from '@/components/shared/svg';
 import { PortfolioCard } from '@/components/pages/portfolio/portfolio-card';
 import CardsPortfoliosSkeleton from '@/components/pages/portfolio/skeleton/cards-portfolios-skeleton';
 import ToolTips from '@/components/shared/tooltips';
+import Head from 'next/head';
 
 export default function Portfolio() {
   const [category, setCategory] = useState<
@@ -21,6 +22,14 @@ export default function Portfolio() {
 
   return (
     <>
+      <Head>
+        <title>{process.env.NEXT_PUBLIC_SITE_NAME} | Portfolio</title>
+        <meta
+          name="description"
+          content="A small collection of works with my skills"
+        />
+      </Head>
+
       <div className="portfolio-page">
         <div className="portfolio-hero-wrapper">
           <div className="portfolio-hero-inner">

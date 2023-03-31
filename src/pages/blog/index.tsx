@@ -15,6 +15,7 @@ import Svg from '@/components/shared/svg';
 import ToolTips from '@/components/shared/tooltips';
 import { formatDate } from '@/utils/formatters';
 import Pagination from '@atlaskit/pagination';
+import Head from 'next/head';
 
 export default function Blog() {
   const [orderBy, setOrderBy] = useState<'CreatedAtDesc' | 'CreatedAtAsc'>(
@@ -127,6 +128,11 @@ export default function Blog() {
 
   return (
     <>
+      <Head>
+        <title>{process.env.NEXT_PUBLIC_SITE_NAME} | Blog</title>
+        <meta name="description" content="Blog" />
+      </Head>
+
       {modal && (
         <Modal align="flex-start" marginTop={80} flat>
           <div>
