@@ -47,7 +47,7 @@
   .porfolio-card-button {
     @include button-reset;
     display: flex;
-    background: $danger;
+    background: $dark-blue;
     color: $snow;
     padding: rem-calc(10 20);
     margin-top: rem-calc(18);
@@ -62,13 +62,6 @@
       color: $dark-blue;
     }
   }
-
-  .portfolio-card-content {
-    &.active {
-      opacity: 1;
-      margin-bottom: 0;
-    }
-  }
 }
 
 .portfolio-card-content {
@@ -78,15 +71,13 @@
   left: 0;
   background: white;
   padding: calc($global-gap * 2);
-  margin-bottom: rem-calc(-100);
-  opacity: 0;
-  transition: 0.2s cubic-bezier(0, 0.64, 0.6, 0.97);
+  margin-bottom: rem-calc(-300);
+  transition: 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
   box-shadow: $global-shadow;
   border-radius: calc($global-radius / 2);
 
-  video {
-    width: 100% !important;
-    height: auto !important;
+  &.active {
+    margin-bottom: 0;
   }
 }
 
