@@ -131,7 +131,7 @@ export default function Blog() {
         <Modal align="flex-start" marginTop={80} flat>
           <div>
             <SearchBox
-              value={search == null ? '' : search}
+              value={search === null ? '' : search}
               placeholder="Search..."
               onClick={() => {
                 setSearch(null);
@@ -225,7 +225,7 @@ export default function Blog() {
           >
             <div>
               <button
-                disabled={orderBy == 'CreatedAtDesc'}
+                disabled={orderBy === 'CreatedAtDesc'}
                 onClick={() => setOrderBy('CreatedAtDesc')}
               >
                 <Svg
@@ -235,7 +235,7 @@ export default function Blog() {
                 />
               </button>
               <button
-                disabled={orderBy == 'CreatedAtAsc'}
+                disabled={orderBy === 'CreatedAtAsc'}
                 onClick={() => setOrderBy('CreatedAtAsc')}
               >
                 <Svg

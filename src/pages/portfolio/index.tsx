@@ -37,42 +37,42 @@ export default function Portfolio() {
                 Animation
               </button>
               <button
-                className={category == 'Web/App' ? 'selected' : ''}
+                className={category === 'Web/App' ? 'selected' : ''}
                 onClick={() => setCategory('Web/App')}
               >
                 Web/App
               </button>
               <button
-                className={category == 'Illustration Art' ? 'selected' : ''}
+                className={category === 'Illustration Art' ? 'selected' : ''}
                 onClick={() => setCategory('Illustration Art')}
               >
                 Illustration Art
               </button>
               <button
-                className={category == '3D Model' ? 'selected' : ''}
+                className={category === '3D Model' ? 'selected' : ''}
                 onClick={() => setCategory('3D Model')}
               >
                 3D Model
               </button>
               <button
-                className={category == 'Tutorial' ? 'selected' : ''}
+                className={category === 'Tutorial' ? 'selected' : ''}
                 onClick={() => setCategory('Tutorial')}
               >
                 Tutorial
               </button>
               <ToolTips
                 position="top"
-                content={category == undefined ? 'Select One' : 'Reset'}
+                content={category === undefined ? 'Select One' : 'Reset'}
                 offset={14}
                 background={
-                  category == undefined ? 'var(--danger)' : 'var(--warning)'
+                  category === undefined ? 'var(--danger)' : 'var(--warning)'
                 }
                 color={
-                  category == undefined ? 'var(--snow)' : 'var(--darkBlue)'
+                  category === undefined ? 'var(--snow)' : 'var(--darkBlue)'
                 }
               >
                 <button
-                  className={`reset ${category == undefined && 'disabled'}`}
+                  className={`reset ${category === undefined && 'disabled'}`}
                   onClick={() => setCategory(undefined)}
                 >
                   <Svg
@@ -92,7 +92,7 @@ export default function Portfolio() {
               {category === undefined ? 'Total' : category}
             </h2>
             <h2 className="portfolio-filtered-count">
-              {dataPortfolios.portfolios.length}
+              {dataPortfolios?.portfolios.length}
             </h2>
           </div>
 
