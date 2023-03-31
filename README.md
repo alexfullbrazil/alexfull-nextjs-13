@@ -1,4 +1,5 @@
-![My Image](screen-shot-home.png)
+![Home](screen-shot-home.png)
+![Home](screen-shot-portfolio.png)
 
 Open <https://alexfull.com> to see in action.
 
