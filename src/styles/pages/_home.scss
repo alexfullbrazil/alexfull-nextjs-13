@@ -23,12 +23,16 @@
   }
 
   p {
-    font-size: rem-calc(22);
+    font-size: rem-calc(18);
     font-family: $primary-font;
     color: $grey;
     margin-top: rem-calc(46);
     margin-bottom: 0;
     line-height: 1.48;
+
+    @include md {
+      font-size: rem-calc(22);
+    }
   }
 }
 
@@ -43,6 +47,11 @@
   height: rem-calc(58);
   border-radius: 999px;
   margin: rem-calc(60 0);
+  scale: 0.8;
+
+  @include md {
+    scale: 1;
+  }
 
   &:hover {
     background: $dark-blue;
@@ -53,5 +62,10 @@
   @include flex-centered;
   flex-direction: row;
   gap: rem-calc(32);
-  flex-wrap: wrap;
+  padding: rem-calc(0 42);
+
+  svg {
+    width: 100%;
+    height: auto;
+  }
 }
