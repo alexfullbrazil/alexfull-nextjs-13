@@ -12,6 +12,11 @@ export default function Home() {
           name="description"
           content="A FullStack App with Hygraph, Next.JS 13 & Apollo GraphQL"
         />
+        <meta
+          property="og:description"
+          content="A FullStack App with Hygraph, Next.JS 13 & Apollo GraphQL"
+        />
+        <meta property="og:image" content="/og-image.jpg" />
       </Head>
       <main className="page-home-wrapper">
         <div className="home-hero-wrapper">
@@ -33,11 +38,7 @@ export default function Home() {
                 background={'var(--danger)'}
               >
                 <a target={'_blank'} href="https://nextjs.org/">
-                  <Svg
-                    height={50}
-                    color="var(--dark-blue)"
-                    src="assets/logos/next.svg"
-                  />
+                  <Svg color="var(--dark-blue)" src="assets/logos/next.svg" />
                 </a>
               </ToolTips>
               <ToolTips
@@ -61,11 +62,7 @@ export default function Home() {
                 background={'var(--danger)'}
               >
                 <a target={'_blank'} href="https://www.apollographql.com/">
-                  <Svg
-                    height={50}
-                    color="var(--dark-blue)"
-                    src="assets/logos/apollo.svg"
-                  />
+                  <Svg color="var(--dark-blue)" src="assets/logos/apollo.svg" />
                 </a>
               </ToolTips>
             </div>
