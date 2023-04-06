@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 import Svg from '@/components/shared/svg';
 import Link from 'next/link';
+import { ActiveLink } from '../active-link';
 interface HeaderProps {
   children?: ReactNode;
 }
@@ -54,19 +55,31 @@ export default function Header({ children }: HeaderProps) {
       >
         <ul>
           <li>
-            <Link onClick={toggleNavigation} href="/">
-              Home
-            </Link>
+            <ActiveLink
+              onClick={toggleNavigation}
+              href="/"
+              activeClassName="active-link"
+            >
+              <>Home</>
+            </ActiveLink>
           </li>
           <li>
-            <Link onClick={toggleNavigation} href="/portfolio">
-              Portfolio
-            </Link>
+            <ActiveLink
+              onClick={toggleNavigation}
+              href="/portfolio"
+              activeClassName="active-link"
+            >
+              <>Portfolio</>
+            </ActiveLink>
           </li>
           <li>
-            <Link onClick={toggleNavigation} href="/blog">
-              Blog
-            </Link>
+            <ActiveLink
+              onClick={toggleNavigation}
+              href="/blog"
+              activeClassName="active-link"
+            >
+              <>Blog</>
+            </ActiveLink>
           </li>
         </ul>
       </nav>

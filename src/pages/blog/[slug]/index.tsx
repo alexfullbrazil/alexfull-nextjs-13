@@ -42,6 +42,9 @@ export default function Post() {
           {process.env.NEXT_PUBLIC_SITE_NAME} | {dataPost?.post.title}
         </title>
         <meta name="description" content={dataPost?.post?.excerpt} />
+        <meta property="og:title" content={dataPost?.post.title} />
+        <meta property="og:description" content={dataPost?.post?.excerpt} />
+        <meta property="og:image" content={dataPost?.post.coverImage.url} />
       </Head>
 
       {loading ? (

@@ -64,7 +64,7 @@
       color: $dark-blue;
       font-weight: 700;
       &.active-link {
-        color: red;
+        color: $danger;
       }
     }
   }
