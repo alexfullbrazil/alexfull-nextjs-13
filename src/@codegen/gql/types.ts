@@ -1,3 +1,4 @@
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
@@ -5,6 +6,8 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -13,14 +16,20 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  /** A date string, such as 2007-12-03 (YYYY-MM-DD), compliant with ISO 8601 standard for representation of dates using the Gregorian calendar. */
   Date: any;
+  /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the date-timeformat outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representationof dates and times using the Gregorian calendar. */
   DateTime: any;
   Hex: any;
+  /** Raw JSON value */
   Json: any;
+  /** The Long scalar type represents non-fractional signed whole numeric values. Long can represent values between -(2^63) and 2^63 - 1. */
   Long: any;
   RGBAHue: any;
   RGBATransparency: any;
+  /** Slate-compatible RichText AST */
   RichTextAST: any;
+  _FieldSet: any;
 };
 
 export type Aggregate = {
@@ -7913,3 +7922,1268 @@ export function useGetPostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>;
 export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>;
 export type GetPostQueryResult = Apollo.QueryResult<GetPostQuery, GetPostQueryVariables>;
+
+
+export type ResolverTypeWrapper<T> = Promise<T> | T;
+
+
+export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
+
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Promise<TResult> | TResult;
+
+export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => AsyncIterable<TResult> | Promise<AsyncIterable<TResult>>;
+
+export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+}
+
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
+  resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
+}
+
+export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+  | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
+
+export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
+
+export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+  parent: TParent,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
+
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+
+export type NextResolverFn<T> = () => Promise<T>;
+
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+  next: NextResolverFn<TResult>,
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+/** Mapping of union types */
+export type ResolversUnionTypes = {
+  ScheduledOperationAffectedDocument: ( Asset ) | ( Author ) | ( Category ) | ( Page ) | ( Portfolio ) | ( Post ) | ( Omit<Seo, 'parent'> & { parent?: Maybe<ResolversTypes['SeoParent']> } );
+  SeoParent: ( Page );
+};
+
+/** Mapping of union parent types */
+export type ResolversUnionParentTypes = {
+  ScheduledOperationAffectedDocument: ( Asset ) | ( Author ) | ( Category ) | ( Page ) | ( Portfolio ) | ( Post ) | ( Omit<Seo, 'parent'> & { parent?: Maybe<ResolversParentTypes['SeoParent']> } );
+  SeoParent: ( Page );
+};
+
+/** Mapping between all available schema types and the resolvers types */
+export type ResolversTypes = {
+  Aggregate: ResolverTypeWrapper<Aggregate>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  Asset: ResolverTypeWrapper<Asset>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
+  AssetConnectInput: AssetConnectInput;
+  AssetConnection: ResolverTypeWrapper<AssetConnection>;
+  AssetCreateInput: AssetCreateInput;
+  AssetCreateLocalizationDataInput: AssetCreateLocalizationDataInput;
+  AssetCreateLocalizationInput: AssetCreateLocalizationInput;
+  AssetCreateLocalizationsInput: AssetCreateLocalizationsInput;
+  AssetCreateManyInlineInput: AssetCreateManyInlineInput;
+  AssetCreateOneInlineInput: AssetCreateOneInlineInput;
+  AssetEdge: ResolverTypeWrapper<AssetEdge>;
+  AssetManyWhereInput: AssetManyWhereInput;
+  AssetOrderByInput: AssetOrderByInput;
+  AssetTransformationInput: AssetTransformationInput;
+  AssetUpdateInput: AssetUpdateInput;
+  AssetUpdateLocalizationDataInput: AssetUpdateLocalizationDataInput;
+  AssetUpdateLocalizationInput: AssetUpdateLocalizationInput;
+  AssetUpdateLocalizationsInput: AssetUpdateLocalizationsInput;
+  AssetUpdateManyInlineInput: AssetUpdateManyInlineInput;
+  AssetUpdateManyInput: AssetUpdateManyInput;
+  AssetUpdateManyLocalizationDataInput: AssetUpdateManyLocalizationDataInput;
+  AssetUpdateManyLocalizationInput: AssetUpdateManyLocalizationInput;
+  AssetUpdateManyLocalizationsInput: AssetUpdateManyLocalizationsInput;
+  AssetUpdateManyWithNestedWhereInput: AssetUpdateManyWithNestedWhereInput;
+  AssetUpdateOneInlineInput: AssetUpdateOneInlineInput;
+  AssetUpdateWithNestedWhereUniqueInput: AssetUpdateWithNestedWhereUniqueInput;
+  AssetUpsertInput: AssetUpsertInput;
+  AssetUpsertLocalizationInput: AssetUpsertLocalizationInput;
+  AssetUpsertWithNestedWhereUniqueInput: AssetUpsertWithNestedWhereUniqueInput;
+  AssetWhereComparatorInput: AssetWhereComparatorInput;
+  AssetWhereInput: AssetWhereInput;
+  AssetWhereStageInput: AssetWhereStageInput;
+  AssetWhereUniqueInput: AssetWhereUniqueInput;
+  Author: ResolverTypeWrapper<Author>;
+  AuthorConnectInput: AuthorConnectInput;
+  AuthorConnection: ResolverTypeWrapper<AuthorConnection>;
+  AuthorCreateInput: AuthorCreateInput;
+  AuthorCreateManyInlineInput: AuthorCreateManyInlineInput;
+  AuthorCreateOneInlineInput: AuthorCreateOneInlineInput;
+  AuthorEdge: ResolverTypeWrapper<AuthorEdge>;
+  AuthorManyWhereInput: AuthorManyWhereInput;
+  AuthorOrderByInput: AuthorOrderByInput;
+  AuthorUpdateInput: AuthorUpdateInput;
+  AuthorUpdateManyInlineInput: AuthorUpdateManyInlineInput;
+  AuthorUpdateManyInput: AuthorUpdateManyInput;
+  AuthorUpdateManyWithNestedWhereInput: AuthorUpdateManyWithNestedWhereInput;
+  AuthorUpdateOneInlineInput: AuthorUpdateOneInlineInput;
+  AuthorUpdateWithNestedWhereUniqueInput: AuthorUpdateWithNestedWhereUniqueInput;
+  AuthorUpsertInput: AuthorUpsertInput;
+  AuthorUpsertWithNestedWhereUniqueInput: AuthorUpsertWithNestedWhereUniqueInput;
+  AuthorWhereComparatorInput: AuthorWhereComparatorInput;
+  AuthorWhereInput: AuthorWhereInput;
+  AuthorWhereStageInput: AuthorWhereStageInput;
+  AuthorWhereUniqueInput: AuthorWhereUniqueInput;
+  BatchPayload: ResolverTypeWrapper<BatchPayload>;
+  Category: ResolverTypeWrapper<Category>;
+  CategoryConnectInput: CategoryConnectInput;
+  CategoryConnection: ResolverTypeWrapper<CategoryConnection>;
+  CategoryCreateInput: CategoryCreateInput;
+  CategoryCreateManyInlineInput: CategoryCreateManyInlineInput;
+  CategoryCreateOneInlineInput: CategoryCreateOneInlineInput;
+  CategoryEdge: ResolverTypeWrapper<CategoryEdge>;
+  CategoryManyWhereInput: CategoryManyWhereInput;
+  CategoryOrderByInput: CategoryOrderByInput;
+  CategoryUpdateInput: CategoryUpdateInput;
+  CategoryUpdateManyInlineInput: CategoryUpdateManyInlineInput;
+  CategoryUpdateManyInput: CategoryUpdateManyInput;
+  CategoryUpdateManyWithNestedWhereInput: CategoryUpdateManyWithNestedWhereInput;
+  CategoryUpdateOneInlineInput: CategoryUpdateOneInlineInput;
+  CategoryUpdateWithNestedWhereUniqueInput: CategoryUpdateWithNestedWhereUniqueInput;
+  CategoryUpsertInput: CategoryUpsertInput;
+  CategoryUpsertWithNestedWhereUniqueInput: CategoryUpsertWithNestedWhereUniqueInput;
+  CategoryWhereComparatorInput: CategoryWhereComparatorInput;
+  CategoryWhereInput: CategoryWhereInput;
+  CategoryWhereStageInput: CategoryWhereStageInput;
+  CategoryWhereUniqueInput: CategoryWhereUniqueInput;
+  Color: ResolverTypeWrapper<Color>;
+  ColorInput: ColorInput;
+  ConnectPositionInput: ConnectPositionInput;
+  Date: ResolverTypeWrapper<Scalars['Date']>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  DocumentFileTypes: DocumentFileTypes;
+  DocumentOutputInput: DocumentOutputInput;
+  DocumentTransformationInput: DocumentTransformationInput;
+  DocumentVersion: ResolverTypeWrapper<DocumentVersion>;
+  Hex: ResolverTypeWrapper<Scalars['Hex']>;
+  ImageFit: ImageFit;
+  ImageResizeInput: ImageResizeInput;
+  ImageTransformationInput: ImageTransformationInput;
+  Json: ResolverTypeWrapper<Scalars['Json']>;
+  Kind: Kind;
+  Locale: Locale;
+  Location: ResolverTypeWrapper<Location>;
+  LocationInput: LocationInput;
+  Long: ResolverTypeWrapper<Scalars['Long']>;
+  Mutation: ResolverTypeWrapper<{}>;
+  Node: ResolversTypes['Asset'] | ResolversTypes['Author'] | ResolversTypes['Category'] | ResolversTypes['Page'] | ResolversTypes['Portfolio'] | ResolversTypes['Post'] | ResolversTypes['ScheduledOperation'] | ResolversTypes['ScheduledRelease'] | ResolversTypes['Seo'] | ResolversTypes['User'];
+  Page: ResolverTypeWrapper<Page>;
+  PageConnectInput: PageConnectInput;
+  PageConnection: ResolverTypeWrapper<PageConnection>;
+  PageCreateInput: PageCreateInput;
+  PageCreateManyInlineInput: PageCreateManyInlineInput;
+  PageCreateOneInlineInput: PageCreateOneInlineInput;
+  PageEdge: ResolverTypeWrapper<PageEdge>;
+  PageInfo: ResolverTypeWrapper<PageInfo>;
+  PageManyWhereInput: PageManyWhereInput;
+  PageOrderByInput: PageOrderByInput;
+  PageUpdateInput: PageUpdateInput;
+  PageUpdateManyInlineInput: PageUpdateManyInlineInput;
+  PageUpdateManyInput: PageUpdateManyInput;
+  PageUpdateManyWithNestedWhereInput: PageUpdateManyWithNestedWhereInput;
+  PageUpdateOneInlineInput: PageUpdateOneInlineInput;
+  PageUpdateWithNestedWhereUniqueInput: PageUpdateWithNestedWhereUniqueInput;
+  PageUpsertInput: PageUpsertInput;
+  PageUpsertWithNestedWhereUniqueInput: PageUpsertWithNestedWhereUniqueInput;
+  PageWhereComparatorInput: PageWhereComparatorInput;
+  PageWhereInput: PageWhereInput;
+  PageWhereStageInput: PageWhereStageInput;
+  PageWhereUniqueInput: PageWhereUniqueInput;
+  Portfolio: ResolverTypeWrapper<Portfolio>;
+  PortfolioConnectInput: PortfolioConnectInput;
+  PortfolioConnection: ResolverTypeWrapper<PortfolioConnection>;
+  PortfolioCreateInput: PortfolioCreateInput;
+  PortfolioCreateManyInlineInput: PortfolioCreateManyInlineInput;
+  PortfolioCreateOneInlineInput: PortfolioCreateOneInlineInput;
+  PortfolioEdge: ResolverTypeWrapper<PortfolioEdge>;
+  PortfolioManyWhereInput: PortfolioManyWhereInput;
+  PortfolioOrderByInput: PortfolioOrderByInput;
+  PortfolioUpdateInput: PortfolioUpdateInput;
+  PortfolioUpdateManyInlineInput: PortfolioUpdateManyInlineInput;
+  PortfolioUpdateManyInput: PortfolioUpdateManyInput;
+  PortfolioUpdateManyWithNestedWhereInput: PortfolioUpdateManyWithNestedWhereInput;
+  PortfolioUpdateOneInlineInput: PortfolioUpdateOneInlineInput;
+  PortfolioUpdateWithNestedWhereUniqueInput: PortfolioUpdateWithNestedWhereUniqueInput;
+  PortfolioUpsertInput: PortfolioUpsertInput;
+  PortfolioUpsertWithNestedWhereUniqueInput: PortfolioUpsertWithNestedWhereUniqueInput;
+  PortfolioWhereComparatorInput: PortfolioWhereComparatorInput;
+  PortfolioWhereInput: PortfolioWhereInput;
+  PortfolioWhereStageInput: PortfolioWhereStageInput;
+  PortfolioWhereUniqueInput: PortfolioWhereUniqueInput;
+  Post: ResolverTypeWrapper<Post>;
+  PostConnectInput: PostConnectInput;
+  PostConnection: ResolverTypeWrapper<PostConnection>;
+  PostCreateInput: PostCreateInput;
+  PostCreateManyInlineInput: PostCreateManyInlineInput;
+  PostCreateOneInlineInput: PostCreateOneInlineInput;
+  PostEdge: ResolverTypeWrapper<PostEdge>;
+  PostManyWhereInput: PostManyWhereInput;
+  PostOrderByInput: PostOrderByInput;
+  PostUpdateInput: PostUpdateInput;
+  PostUpdateManyInlineInput: PostUpdateManyInlineInput;
+  PostUpdateManyInput: PostUpdateManyInput;
+  PostUpdateManyWithNestedWhereInput: PostUpdateManyWithNestedWhereInput;
+  PostUpdateOneInlineInput: PostUpdateOneInlineInput;
+  PostUpdateWithNestedWhereUniqueInput: PostUpdateWithNestedWhereUniqueInput;
+  PostUpsertInput: PostUpsertInput;
+  PostUpsertWithNestedWhereUniqueInput: PostUpsertWithNestedWhereUniqueInput;
+  PostWhereComparatorInput: PostWhereComparatorInput;
+  PostWhereInput: PostWhereInput;
+  PostWhereStageInput: PostWhereStageInput;
+  PostWhereUniqueInput: PostWhereUniqueInput;
+  PublishLocaleInput: PublishLocaleInput;
+  Query: ResolverTypeWrapper<{}>;
+  RGBA: ResolverTypeWrapper<Rgba>;
+  RGBAHue: ResolverTypeWrapper<Scalars['RGBAHue']>;
+  RGBAInput: RgbaInput;
+  RGBATransparency: ResolverTypeWrapper<Scalars['RGBATransparency']>;
+  RichText: ResolverTypeWrapper<RichText>;
+  RichTextAST: ResolverTypeWrapper<Scalars['RichTextAST']>;
+  ScheduledOperation: ResolverTypeWrapper<Omit<ScheduledOperation, 'affectedDocuments'> & { affectedDocuments: Array<ResolversTypes['ScheduledOperationAffectedDocument']> }>;
+  ScheduledOperationAffectedDocument: ResolverTypeWrapper<ResolversUnionTypes['ScheduledOperationAffectedDocument']>;
+  ScheduledOperationConnectInput: ScheduledOperationConnectInput;
+  ScheduledOperationConnection: ResolverTypeWrapper<ScheduledOperationConnection>;
+  ScheduledOperationCreateManyInlineInput: ScheduledOperationCreateManyInlineInput;
+  ScheduledOperationCreateOneInlineInput: ScheduledOperationCreateOneInlineInput;
+  ScheduledOperationEdge: ResolverTypeWrapper<ScheduledOperationEdge>;
+  ScheduledOperationManyWhereInput: ScheduledOperationManyWhereInput;
+  ScheduledOperationOrderByInput: ScheduledOperationOrderByInput;
+  ScheduledOperationStatus: ScheduledOperationStatus;
+  ScheduledOperationUpdateManyInlineInput: ScheduledOperationUpdateManyInlineInput;
+  ScheduledOperationUpdateOneInlineInput: ScheduledOperationUpdateOneInlineInput;
+  ScheduledOperationWhereInput: ScheduledOperationWhereInput;
+  ScheduledOperationWhereUniqueInput: ScheduledOperationWhereUniqueInput;
+  ScheduledRelease: ResolverTypeWrapper<ScheduledRelease>;
+  ScheduledReleaseConnectInput: ScheduledReleaseConnectInput;
+  ScheduledReleaseConnection: ResolverTypeWrapper<ScheduledReleaseConnection>;
+  ScheduledReleaseCreateInput: ScheduledReleaseCreateInput;
+  ScheduledReleaseCreateManyInlineInput: ScheduledReleaseCreateManyInlineInput;
+  ScheduledReleaseCreateOneInlineInput: ScheduledReleaseCreateOneInlineInput;
+  ScheduledReleaseEdge: ResolverTypeWrapper<ScheduledReleaseEdge>;
+  ScheduledReleaseManyWhereInput: ScheduledReleaseManyWhereInput;
+  ScheduledReleaseOrderByInput: ScheduledReleaseOrderByInput;
+  ScheduledReleaseStatus: ScheduledReleaseStatus;
+  ScheduledReleaseUpdateInput: ScheduledReleaseUpdateInput;
+  ScheduledReleaseUpdateManyInlineInput: ScheduledReleaseUpdateManyInlineInput;
+  ScheduledReleaseUpdateManyInput: ScheduledReleaseUpdateManyInput;
+  ScheduledReleaseUpdateManyWithNestedWhereInput: ScheduledReleaseUpdateManyWithNestedWhereInput;
+  ScheduledReleaseUpdateOneInlineInput: ScheduledReleaseUpdateOneInlineInput;
+  ScheduledReleaseUpdateWithNestedWhereUniqueInput: ScheduledReleaseUpdateWithNestedWhereUniqueInput;
+  ScheduledReleaseUpsertInput: ScheduledReleaseUpsertInput;
+  ScheduledReleaseUpsertWithNestedWhereUniqueInput: ScheduledReleaseUpsertWithNestedWhereUniqueInput;
+  ScheduledReleaseWhereInput: ScheduledReleaseWhereInput;
+  ScheduledReleaseWhereUniqueInput: ScheduledReleaseWhereUniqueInput;
+  Seo: ResolverTypeWrapper<Omit<Seo, 'parent'> & { parent?: Maybe<ResolversTypes['SeoParent']> }>;
+  SeoConnectInput: SeoConnectInput;
+  SeoConnection: ResolverTypeWrapper<SeoConnection>;
+  SeoCreateInput: SeoCreateInput;
+  SeoCreateManyInlineInput: SeoCreateManyInlineInput;
+  SeoCreateOneInlineInput: SeoCreateOneInlineInput;
+  SeoEdge: ResolverTypeWrapper<SeoEdge>;
+  SeoManyWhereInput: SeoManyWhereInput;
+  SeoOrderByInput: SeoOrderByInput;
+  SeoParent: ResolverTypeWrapper<ResolversUnionTypes['SeoParent']>;
+  SeoParentConnectInput: SeoParentConnectInput;
+  SeoParentCreateInput: SeoParentCreateInput;
+  SeoParentCreateManyInlineInput: SeoParentCreateManyInlineInput;
+  SeoParentCreateOneInlineInput: SeoParentCreateOneInlineInput;
+  SeoParentUpdateInput: SeoParentUpdateInput;
+  SeoParentUpdateManyInlineInput: SeoParentUpdateManyInlineInput;
+  SeoParentUpdateManyWithNestedWhereInput: SeoParentUpdateManyWithNestedWhereInput;
+  SeoParentUpdateOneInlineInput: SeoParentUpdateOneInlineInput;
+  SeoParentUpdateWithNestedWhereUniqueInput: SeoParentUpdateWithNestedWhereUniqueInput;
+  SeoParentUpsertWithNestedWhereUniqueInput: SeoParentUpsertWithNestedWhereUniqueInput;
+  SeoParentWhereInput: SeoParentWhereInput;
+  SeoParentWhereUniqueInput: SeoParentWhereUniqueInput;
+  SeoUpdateInput: SeoUpdateInput;
+  SeoUpdateManyInlineInput: SeoUpdateManyInlineInput;
+  SeoUpdateManyInput: SeoUpdateManyInput;
+  SeoUpdateManyWithNestedWhereInput: SeoUpdateManyWithNestedWhereInput;
+  SeoUpdateOneInlineInput: SeoUpdateOneInlineInput;
+  SeoUpdateWithNestedWhereUniqueInput: SeoUpdateWithNestedWhereUniqueInput;
+  SeoUpsertInput: SeoUpsertInput;
+  SeoUpsertWithNestedWhereUniqueInput: SeoUpsertWithNestedWhereUniqueInput;
+  SeoWhereComparatorInput: SeoWhereComparatorInput;
+  SeoWhereInput: SeoWhereInput;
+  SeoWhereStageInput: SeoWhereStageInput;
+  SeoWhereUniqueInput: SeoWhereUniqueInput;
+  Stage: Stage;
+  SystemDateTimeFieldVariation: SystemDateTimeFieldVariation;
+  UnpublishLocaleInput: UnpublishLocaleInput;
+  User: ResolverTypeWrapper<User>;
+  UserConnectInput: UserConnectInput;
+  UserConnection: ResolverTypeWrapper<UserConnection>;
+  UserCreateManyInlineInput: UserCreateManyInlineInput;
+  UserCreateOneInlineInput: UserCreateOneInlineInput;
+  UserEdge: ResolverTypeWrapper<UserEdge>;
+  UserKind: UserKind;
+  UserManyWhereInput: UserManyWhereInput;
+  UserOrderByInput: UserOrderByInput;
+  UserUpdateManyInlineInput: UserUpdateManyInlineInput;
+  UserUpdateOneInlineInput: UserUpdateOneInlineInput;
+  UserWhereComparatorInput: UserWhereComparatorInput;
+  UserWhereInput: UserWhereInput;
+  UserWhereStageInput: UserWhereStageInput;
+  UserWhereUniqueInput: UserWhereUniqueInput;
+  Version: ResolverTypeWrapper<Version>;
+  VersionWhereInput: VersionWhereInput;
+  _FilterKind: _FilterKind;
+  _MutationInputFieldKind: _MutationInputFieldKind;
+  _MutationKind: _MutationKind;
+  _OrderDirection: _OrderDirection;
+  _RelationInputCardinality: _RelationInputCardinality;
+  _RelationInputKind: _RelationInputKind;
+  _RelationKind: _RelationKind;
+  _SystemDateTimeFieldVariation: _SystemDateTimeFieldVariation;
+};
+
+/** Mapping between all available schema types and the resolvers parents */
+export type ResolversParentTypes = {
+  Aggregate: Aggregate;
+  Int: Scalars['Int'];
+  Asset: Asset;
+  String: Scalars['String'];
+  Boolean: Scalars['Boolean'];
+  Float: Scalars['Float'];
+  ID: Scalars['ID'];
+  AssetConnectInput: AssetConnectInput;
+  AssetConnection: AssetConnection;
+  AssetCreateInput: AssetCreateInput;
+  AssetCreateLocalizationDataInput: AssetCreateLocalizationDataInput;
+  AssetCreateLocalizationInput: AssetCreateLocalizationInput;
+  AssetCreateLocalizationsInput: AssetCreateLocalizationsInput;
+  AssetCreateManyInlineInput: AssetCreateManyInlineInput;
+  AssetCreateOneInlineInput: AssetCreateOneInlineInput;
+  AssetEdge: AssetEdge;
+  AssetManyWhereInput: AssetManyWhereInput;
+  AssetTransformationInput: AssetTransformationInput;
+  AssetUpdateInput: AssetUpdateInput;
+  AssetUpdateLocalizationDataInput: AssetUpdateLocalizationDataInput;
+  AssetUpdateLocalizationInput: AssetUpdateLocalizationInput;
+  AssetUpdateLocalizationsInput: AssetUpdateLocalizationsInput;
+  AssetUpdateManyInlineInput: AssetUpdateManyInlineInput;
+  AssetUpdateManyInput: AssetUpdateManyInput;
+  AssetUpdateManyLocalizationDataInput: AssetUpdateManyLocalizationDataInput;
+  AssetUpdateManyLocalizationInput: AssetUpdateManyLocalizationInput;
+  AssetUpdateManyLocalizationsInput: AssetUpdateManyLocalizationsInput;
+  AssetUpdateManyWithNestedWhereInput: AssetUpdateManyWithNestedWhereInput;
+  AssetUpdateOneInlineInput: AssetUpdateOneInlineInput;
+  AssetUpdateWithNestedWhereUniqueInput: AssetUpdateWithNestedWhereUniqueInput;
+  AssetUpsertInput: AssetUpsertInput;
+  AssetUpsertLocalizationInput: AssetUpsertLocalizationInput;
+  AssetUpsertWithNestedWhereUniqueInput: AssetUpsertWithNestedWhereUniqueInput;
+  AssetWhereComparatorInput: AssetWhereComparatorInput;
+  AssetWhereInput: AssetWhereInput;
+  AssetWhereStageInput: AssetWhereStageInput;
+  AssetWhereUniqueInput: AssetWhereUniqueInput;
+  Author: Author;
+  AuthorConnectInput: AuthorConnectInput;
+  AuthorConnection: AuthorConnection;
+  AuthorCreateInput: AuthorCreateInput;
+  AuthorCreateManyInlineInput: AuthorCreateManyInlineInput;
+  AuthorCreateOneInlineInput: AuthorCreateOneInlineInput;
+  AuthorEdge: AuthorEdge;
+  AuthorManyWhereInput: AuthorManyWhereInput;
+  AuthorUpdateInput: AuthorUpdateInput;
+  AuthorUpdateManyInlineInput: AuthorUpdateManyInlineInput;
+  AuthorUpdateManyInput: AuthorUpdateManyInput;
+  AuthorUpdateManyWithNestedWhereInput: AuthorUpdateManyWithNestedWhereInput;
+  AuthorUpdateOneInlineInput: AuthorUpdateOneInlineInput;
+  AuthorUpdateWithNestedWhereUniqueInput: AuthorUpdateWithNestedWhereUniqueInput;
+  AuthorUpsertInput: AuthorUpsertInput;
+  AuthorUpsertWithNestedWhereUniqueInput: AuthorUpsertWithNestedWhereUniqueInput;
+  AuthorWhereComparatorInput: AuthorWhereComparatorInput;
+  AuthorWhereInput: AuthorWhereInput;
+  AuthorWhereStageInput: AuthorWhereStageInput;
+  AuthorWhereUniqueInput: AuthorWhereUniqueInput;
+  BatchPayload: BatchPayload;
+  Category: Category;
+  CategoryConnectInput: CategoryConnectInput;
+  CategoryConnection: CategoryConnection;
+  CategoryCreateInput: CategoryCreateInput;
+  CategoryCreateManyInlineInput: CategoryCreateManyInlineInput;
+  CategoryCreateOneInlineInput: CategoryCreateOneInlineInput;
+  CategoryEdge: CategoryEdge;
+  CategoryManyWhereInput: CategoryManyWhereInput;
+  CategoryUpdateInput: CategoryUpdateInput;
+  CategoryUpdateManyInlineInput: CategoryUpdateManyInlineInput;
+  CategoryUpdateManyInput: CategoryUpdateManyInput;
+  CategoryUpdateManyWithNestedWhereInput: CategoryUpdateManyWithNestedWhereInput;
+  CategoryUpdateOneInlineInput: CategoryUpdateOneInlineInput;
+  CategoryUpdateWithNestedWhereUniqueInput: CategoryUpdateWithNestedWhereUniqueInput;
+  CategoryUpsertInput: CategoryUpsertInput;
+  CategoryUpsertWithNestedWhereUniqueInput: CategoryUpsertWithNestedWhereUniqueInput;
+  CategoryWhereComparatorInput: CategoryWhereComparatorInput;
+  CategoryWhereInput: CategoryWhereInput;
+  CategoryWhereStageInput: CategoryWhereStageInput;
+  CategoryWhereUniqueInput: CategoryWhereUniqueInput;
+  Color: Color;
+  ColorInput: ColorInput;
+  ConnectPositionInput: ConnectPositionInput;
+  Date: Scalars['Date'];
+  DateTime: Scalars['DateTime'];
+  DocumentOutputInput: DocumentOutputInput;
+  DocumentTransformationInput: DocumentTransformationInput;
+  DocumentVersion: DocumentVersion;
+  Hex: Scalars['Hex'];
+  ImageResizeInput: ImageResizeInput;
+  ImageTransformationInput: ImageTransformationInput;
+  Json: Scalars['Json'];
+  Location: Location;
+  LocationInput: LocationInput;
+  Long: Scalars['Long'];
+  Mutation: {};
+  Node: ResolversParentTypes['Asset'] | ResolversParentTypes['Author'] | ResolversParentTypes['Category'] | ResolversParentTypes['Page'] | ResolversParentTypes['Portfolio'] | ResolversParentTypes['Post'] | ResolversParentTypes['ScheduledOperation'] | ResolversParentTypes['ScheduledRelease'] | ResolversParentTypes['Seo'] | ResolversParentTypes['User'];
+  Page: Page;
+  PageConnectInput: PageConnectInput;
+  PageConnection: PageConnection;
+  PageCreateInput: PageCreateInput;
+  PageCreateManyInlineInput: PageCreateManyInlineInput;
+  PageCreateOneInlineInput: PageCreateOneInlineInput;
+  PageEdge: PageEdge;
+  PageInfo: PageInfo;
+  PageManyWhereInput: PageManyWhereInput;
+  PageUpdateInput: PageUpdateInput;
+  PageUpdateManyInlineInput: PageUpdateManyInlineInput;
+  PageUpdateManyInput: PageUpdateManyInput;
+  PageUpdateManyWithNestedWhereInput: PageUpdateManyWithNestedWhereInput;
+  PageUpdateOneInlineInput: PageUpdateOneInlineInput;
+  PageUpdateWithNestedWhereUniqueInput: PageUpdateWithNestedWhereUniqueInput;
+  PageUpsertInput: PageUpsertInput;
+  PageUpsertWithNestedWhereUniqueInput: PageUpsertWithNestedWhereUniqueInput;
+  PageWhereComparatorInput: PageWhereComparatorInput;
+  PageWhereInput: PageWhereInput;
+  PageWhereStageInput: PageWhereStageInput;
+  PageWhereUniqueInput: PageWhereUniqueInput;
+  Portfolio: Portfolio;
+  PortfolioConnectInput: PortfolioConnectInput;
+  PortfolioConnection: PortfolioConnection;
+  PortfolioCreateInput: PortfolioCreateInput;
+  PortfolioCreateManyInlineInput: PortfolioCreateManyInlineInput;
+  PortfolioCreateOneInlineInput: PortfolioCreateOneInlineInput;
+  PortfolioEdge: PortfolioEdge;
+  PortfolioManyWhereInput: PortfolioManyWhereInput;
+  PortfolioUpdateInput: PortfolioUpdateInput;
+  PortfolioUpdateManyInlineInput: PortfolioUpdateManyInlineInput;
+  PortfolioUpdateManyInput: PortfolioUpdateManyInput;
+  PortfolioUpdateManyWithNestedWhereInput: PortfolioUpdateManyWithNestedWhereInput;
+  PortfolioUpdateOneInlineInput: PortfolioUpdateOneInlineInput;
+  PortfolioUpdateWithNestedWhereUniqueInput: PortfolioUpdateWithNestedWhereUniqueInput;
+  PortfolioUpsertInput: PortfolioUpsertInput;
+  PortfolioUpsertWithNestedWhereUniqueInput: PortfolioUpsertWithNestedWhereUniqueInput;
+  PortfolioWhereComparatorInput: PortfolioWhereComparatorInput;
+  PortfolioWhereInput: PortfolioWhereInput;
+  PortfolioWhereStageInput: PortfolioWhereStageInput;
+  PortfolioWhereUniqueInput: PortfolioWhereUniqueInput;
+  Post: Post;
+  PostConnectInput: PostConnectInput;
+  PostConnection: PostConnection;
+  PostCreateInput: PostCreateInput;
+  PostCreateManyInlineInput: PostCreateManyInlineInput;
+  PostCreateOneInlineInput: PostCreateOneInlineInput;
+  PostEdge: PostEdge;
+  PostManyWhereInput: PostManyWhereInput;
+  PostUpdateInput: PostUpdateInput;
+  PostUpdateManyInlineInput: PostUpdateManyInlineInput;
+  PostUpdateManyInput: PostUpdateManyInput;
+  PostUpdateManyWithNestedWhereInput: PostUpdateManyWithNestedWhereInput;
+  PostUpdateOneInlineInput: PostUpdateOneInlineInput;
+  PostUpdateWithNestedWhereUniqueInput: PostUpdateWithNestedWhereUniqueInput;
+  PostUpsertInput: PostUpsertInput;
+  PostUpsertWithNestedWhereUniqueInput: PostUpsertWithNestedWhereUniqueInput;
+  PostWhereComparatorInput: PostWhereComparatorInput;
+  PostWhereInput: PostWhereInput;
+  PostWhereStageInput: PostWhereStageInput;
+  PostWhereUniqueInput: PostWhereUniqueInput;
+  PublishLocaleInput: PublishLocaleInput;
+  Query: {};
+  RGBA: Rgba;
+  RGBAHue: Scalars['RGBAHue'];
+  RGBAInput: RgbaInput;
+  RGBATransparency: Scalars['RGBATransparency'];
+  RichText: RichText;
+  RichTextAST: Scalars['RichTextAST'];
+  ScheduledOperation: Omit<ScheduledOperation, 'affectedDocuments'> & { affectedDocuments: Array<ResolversParentTypes['ScheduledOperationAffectedDocument']> };
+  ScheduledOperationAffectedDocument: ResolversUnionParentTypes['ScheduledOperationAffectedDocument'];
+  ScheduledOperationConnectInput: ScheduledOperationConnectInput;
+  ScheduledOperationConnection: ScheduledOperationConnection;
+  ScheduledOperationCreateManyInlineInput: ScheduledOperationCreateManyInlineInput;
+  ScheduledOperationCreateOneInlineInput: ScheduledOperationCreateOneInlineInput;
+  ScheduledOperationEdge: ScheduledOperationEdge;
+  ScheduledOperationManyWhereInput: ScheduledOperationManyWhereInput;
+  ScheduledOperationUpdateManyInlineInput: ScheduledOperationUpdateManyInlineInput;
+  ScheduledOperationUpdateOneInlineInput: ScheduledOperationUpdateOneInlineInput;
+  ScheduledOperationWhereInput: ScheduledOperationWhereInput;
+  ScheduledOperationWhereUniqueInput: ScheduledOperationWhereUniqueInput;
+  ScheduledRelease: ScheduledRelease;
+  ScheduledReleaseConnectInput: ScheduledReleaseConnectInput;
+  ScheduledReleaseConnection: ScheduledReleaseConnection;
+  ScheduledReleaseCreateInput: ScheduledReleaseCreateInput;
+  ScheduledReleaseCreateManyInlineInput: ScheduledReleaseCreateManyInlineInput;
+  ScheduledReleaseCreateOneInlineInput: ScheduledReleaseCreateOneInlineInput;
+  ScheduledReleaseEdge: ScheduledReleaseEdge;
+  ScheduledReleaseManyWhereInput: ScheduledReleaseManyWhereInput;
+  ScheduledReleaseUpdateInput: ScheduledReleaseUpdateInput;
+  ScheduledReleaseUpdateManyInlineInput: ScheduledReleaseUpdateManyInlineInput;
+  ScheduledReleaseUpdateManyInput: ScheduledReleaseUpdateManyInput;
+  ScheduledReleaseUpdateManyWithNestedWhereInput: ScheduledReleaseUpdateManyWithNestedWhereInput;
+  ScheduledReleaseUpdateOneInlineInput: ScheduledReleaseUpdateOneInlineInput;
+  ScheduledReleaseUpdateWithNestedWhereUniqueInput: ScheduledReleaseUpdateWithNestedWhereUniqueInput;
+  ScheduledReleaseUpsertInput: ScheduledReleaseUpsertInput;
+  ScheduledReleaseUpsertWithNestedWhereUniqueInput: ScheduledReleaseUpsertWithNestedWhereUniqueInput;
+  ScheduledReleaseWhereInput: ScheduledReleaseWhereInput;
+  ScheduledReleaseWhereUniqueInput: ScheduledReleaseWhereUniqueInput;
+  Seo: Omit<Seo, 'parent'> & { parent?: Maybe<ResolversParentTypes['SeoParent']> };
+  SeoConnectInput: SeoConnectInput;
+  SeoConnection: SeoConnection;
+  SeoCreateInput: SeoCreateInput;
+  SeoCreateManyInlineInput: SeoCreateManyInlineInput;
+  SeoCreateOneInlineInput: SeoCreateOneInlineInput;
+  SeoEdge: SeoEdge;
+  SeoManyWhereInput: SeoManyWhereInput;
+  SeoParent: ResolversUnionParentTypes['SeoParent'];
+  SeoParentConnectInput: SeoParentConnectInput;
+  SeoParentCreateInput: SeoParentCreateInput;
+  SeoParentCreateManyInlineInput: SeoParentCreateManyInlineInput;
+  SeoParentCreateOneInlineInput: SeoParentCreateOneInlineInput;
+  SeoParentUpdateInput: SeoParentUpdateInput;
+  SeoParentUpdateManyInlineInput: SeoParentUpdateManyInlineInput;
+  SeoParentUpdateManyWithNestedWhereInput: SeoParentUpdateManyWithNestedWhereInput;
+  SeoParentUpdateOneInlineInput: SeoParentUpdateOneInlineInput;
+  SeoParentUpdateWithNestedWhereUniqueInput: SeoParentUpdateWithNestedWhereUniqueInput;
+  SeoParentUpsertWithNestedWhereUniqueInput: SeoParentUpsertWithNestedWhereUniqueInput;
+  SeoParentWhereInput: SeoParentWhereInput;
+  SeoParentWhereUniqueInput: SeoParentWhereUniqueInput;
+  SeoUpdateInput: SeoUpdateInput;
+  SeoUpdateManyInlineInput: SeoUpdateManyInlineInput;
+  SeoUpdateManyInput: SeoUpdateManyInput;
+  SeoUpdateManyWithNestedWhereInput: SeoUpdateManyWithNestedWhereInput;
+  SeoUpdateOneInlineInput: SeoUpdateOneInlineInput;
+  SeoUpdateWithNestedWhereUniqueInput: SeoUpdateWithNestedWhereUniqueInput;
+  SeoUpsertInput: SeoUpsertInput;
+  SeoUpsertWithNestedWhereUniqueInput: SeoUpsertWithNestedWhereUniqueInput;
+  SeoWhereComparatorInput: SeoWhereComparatorInput;
+  SeoWhereInput: SeoWhereInput;
+  SeoWhereStageInput: SeoWhereStageInput;
+  SeoWhereUniqueInput: SeoWhereUniqueInput;
+  UnpublishLocaleInput: UnpublishLocaleInput;
+  User: User;
+  UserConnectInput: UserConnectInput;
+  UserConnection: UserConnection;
+  UserCreateManyInlineInput: UserCreateManyInlineInput;
+  UserCreateOneInlineInput: UserCreateOneInlineInput;
+  UserEdge: UserEdge;
+  UserManyWhereInput: UserManyWhereInput;
+  UserUpdateManyInlineInput: UserUpdateManyInlineInput;
+  UserUpdateOneInlineInput: UserUpdateOneInlineInput;
+  UserWhereComparatorInput: UserWhereComparatorInput;
+  UserWhereInput: UserWhereInput;
+  UserWhereStageInput: UserWhereStageInput;
+  UserWhereUniqueInput: UserWhereUniqueInput;
+  Version: Version;
+  VersionWhereInput: VersionWhereInput;
+};
+
+export type AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['Aggregate'] = ResolversParentTypes['Aggregate']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AssetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Asset'] = ResolversParentTypes['Asset']> = {
+  authorAvatar?: Resolver<Array<ResolversTypes['Author']>, ParentType, ContextType, Partial<AssetAuthorAvatarArgs>>;
+  cardImagePortfolio?: Resolver<Array<ResolversTypes['Portfolio']>, ParentType, ContextType, Partial<AssetCardImagePortfolioArgs>>;
+  coverImagePost?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType, Partial<AssetCoverImagePostArgs>>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType, RequireFields<AssetCreatedAtArgs, 'variation'>>;
+  createdBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<AssetCreatedByArgs>>;
+  documentInStages?: Resolver<Array<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<AssetDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  fileName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  handle?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  height?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  history?: Resolver<Array<ResolversTypes['Version']>, ParentType, ContextType, RequireFields<AssetHistoryArgs, 'limit' | 'skip'>>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  locale?: Resolver<ResolversTypes['Locale'], ParentType, ContextType>;
+  localizations?: Resolver<Array<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<AssetLocalizationsArgs, 'includeCurrent' | 'locales'>>;
+  mimeType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType, RequireFields<AssetPublishedAtArgs, 'variation'>>;
+  publishedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<AssetPublishedByArgs>>;
+  scheduledIn?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, Partial<AssetScheduledInArgs>>;
+  seoImage?: Resolver<Array<ResolversTypes['Seo']>, ParentType, ContextType, Partial<AssetSeoImageArgs>>;
+  size?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType, RequireFields<AssetUpdatedAtArgs, 'variation'>>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<AssetUpdatedByArgs>>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType, Partial<AssetUrlArgs>>;
+  width?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AssetConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['AssetConnection'] = ResolversParentTypes['AssetConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['AssetEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AssetEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['AssetEdge'] = ResolversParentTypes['AssetEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Asset'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AuthorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Author'] = ResolversParentTypes['Author']> = {
+  biography?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<AuthorCreatedByArgs>>;
+  documentInStages?: Resolver<Array<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<AuthorDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  history?: Resolver<Array<ResolversTypes['Version']>, ParentType, ContextType, RequireFields<AuthorHistoryArgs, 'limit' | 'skip'>>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  picture?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, Partial<AuthorPictureArgs>>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  publishedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<AuthorPublishedByArgs>>;
+  scheduledIn?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, Partial<AuthorScheduledInArgs>>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<AuthorUpdatedByArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AuthorConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthorConnection'] = ResolversParentTypes['AuthorConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['AuthorEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type AuthorEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthorEdge'] = ResolversParentTypes['AuthorEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Author'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type BatchPayloadResolvers<ContextType = any, ParentType extends ResolversParentTypes['BatchPayload'] = ResolversParentTypes['BatchPayload']> = {
+  count?: Resolver<ResolversTypes['Long'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CategoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<CategoryCreatedByArgs>>;
+  documentInStages?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<CategoryDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  history?: Resolver<Array<ResolversTypes['Version']>, ParentType, ContextType, RequireFields<CategoryHistoryArgs, 'limit' | 'skip'>>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType, Partial<CategoryPostsArgs>>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  publishedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<CategoryPublishedByArgs>>;
+  scheduledIn?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, Partial<CategoryScheduledInArgs>>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<CategoryUpdatedByArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CategoryConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['CategoryConnection'] = ResolversParentTypes['CategoryConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['CategoryEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CategoryEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['CategoryEdge'] = ResolversParentTypes['CategoryEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Category'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ColorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Color'] = ResolversParentTypes['Color']> = {
+  css?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  hex?: Resolver<ResolversTypes['Hex'], ParentType, ContextType>;
+  rgba?: Resolver<ResolversTypes['RGBA'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
+  name: 'Date';
+}
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
+
+export type DocumentVersionResolvers<ContextType = any, ParentType extends ResolversParentTypes['DocumentVersion'] = ResolversParentTypes['DocumentVersion']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  data?: Resolver<Maybe<ResolversTypes['Json']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  revision?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface HexScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Hex'], any> {
+  name: 'Hex';
+}
+
+export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Json'], any> {
+  name: 'Json';
+}
+
+export type LocationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Location'] = ResolversParentTypes['Location']> = {
+  distance?: Resolver<ResolversTypes['Float'], ParentType, ContextType, RequireFields<LocationDistanceArgs, 'from'>>;
+  latitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  longitude?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface LongScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Long'], any> {
+  name: 'Long';
+}
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createAsset?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<MutationCreateAssetArgs, 'data'>>;
+  createAuthor?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<MutationCreateAuthorArgs, 'data'>>;
+  createCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationCreateCategoryArgs, 'data'>>;
+  createPage?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<MutationCreatePageArgs, 'data'>>;
+  createPortfolio?: Resolver<Maybe<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<MutationCreatePortfolioArgs, 'data'>>;
+  createPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationCreatePostArgs, 'data'>>;
+  createScheduledRelease?: Resolver<Maybe<ResolversTypes['ScheduledRelease']>, ParentType, ContextType, RequireFields<MutationCreateScheduledReleaseArgs, 'data'>>;
+  createSeo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<MutationCreateSeoArgs, 'data'>>;
+  deleteAsset?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<MutationDeleteAssetArgs, 'where'>>;
+  deleteAuthor?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<MutationDeleteAuthorArgs, 'where'>>;
+  deleteCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationDeleteCategoryArgs, 'where'>>;
+  deleteManyAssets?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, Partial<MutationDeleteManyAssetsArgs>>;
+  deleteManyAssetsConnection?: Resolver<ResolversTypes['AssetConnection'], ParentType, ContextType, Partial<MutationDeleteManyAssetsConnectionArgs>>;
+  deleteManyAuthors?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, Partial<MutationDeleteManyAuthorsArgs>>;
+  deleteManyAuthorsConnection?: Resolver<ResolversTypes['AuthorConnection'], ParentType, ContextType, Partial<MutationDeleteManyAuthorsConnectionArgs>>;
+  deleteManyCategories?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, Partial<MutationDeleteManyCategoriesArgs>>;
+  deleteManyCategoriesConnection?: Resolver<ResolversTypes['CategoryConnection'], ParentType, ContextType, Partial<MutationDeleteManyCategoriesConnectionArgs>>;
+  deleteManyPages?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, Partial<MutationDeleteManyPagesArgs>>;
+  deleteManyPagesConnection?: Resolver<ResolversTypes['PageConnection'], ParentType, ContextType, Partial<MutationDeleteManyPagesConnectionArgs>>;
+  deleteManyPortfolios?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, Partial<MutationDeleteManyPortfoliosArgs>>;
+  deleteManyPortfoliosConnection?: Resolver<ResolversTypes['PortfolioConnection'], ParentType, ContextType, Partial<MutationDeleteManyPortfoliosConnectionArgs>>;
+  deleteManyPosts?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, Partial<MutationDeleteManyPostsArgs>>;
+  deleteManyPostsConnection?: Resolver<ResolversTypes['PostConnection'], ParentType, ContextType, Partial<MutationDeleteManyPostsConnectionArgs>>;
+  deleteManySeos?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, Partial<MutationDeleteManySeosArgs>>;
+  deleteManySeosConnection?: Resolver<ResolversTypes['SeoConnection'], ParentType, ContextType, Partial<MutationDeleteManySeosConnectionArgs>>;
+  deletePage?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<MutationDeletePageArgs, 'where'>>;
+  deletePortfolio?: Resolver<Maybe<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<MutationDeletePortfolioArgs, 'where'>>;
+  deletePost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationDeletePostArgs, 'where'>>;
+  deleteScheduledOperation?: Resolver<Maybe<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, RequireFields<MutationDeleteScheduledOperationArgs, 'where'>>;
+  deleteScheduledRelease?: Resolver<Maybe<ResolversTypes['ScheduledRelease']>, ParentType, ContextType, RequireFields<MutationDeleteScheduledReleaseArgs, 'where'>>;
+  deleteSeo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<MutationDeleteSeoArgs, 'where'>>;
+  publishAsset?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<MutationPublishAssetArgs, 'publishBase' | 'to' | 'where' | 'withDefaultLocale'>>;
+  publishAuthor?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<MutationPublishAuthorArgs, 'to' | 'where'>>;
+  publishCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationPublishCategoryArgs, 'to' | 'where'>>;
+  publishManyAssets?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationPublishManyAssetsArgs, 'publishBase' | 'to' | 'withDefaultLocale'>>;
+  publishManyAssetsConnection?: Resolver<ResolversTypes['AssetConnection'], ParentType, ContextType, RequireFields<MutationPublishManyAssetsConnectionArgs, 'from' | 'publishBase' | 'to' | 'withDefaultLocale'>>;
+  publishManyAuthors?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationPublishManyAuthorsArgs, 'to'>>;
+  publishManyAuthorsConnection?: Resolver<ResolversTypes['AuthorConnection'], ParentType, ContextType, RequireFields<MutationPublishManyAuthorsConnectionArgs, 'from' | 'to'>>;
+  publishManyCategories?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationPublishManyCategoriesArgs, 'to'>>;
+  publishManyCategoriesConnection?: Resolver<ResolversTypes['CategoryConnection'], ParentType, ContextType, RequireFields<MutationPublishManyCategoriesConnectionArgs, 'from' | 'to'>>;
+  publishManyPages?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationPublishManyPagesArgs, 'to'>>;
+  publishManyPagesConnection?: Resolver<ResolversTypes['PageConnection'], ParentType, ContextType, RequireFields<MutationPublishManyPagesConnectionArgs, 'from' | 'to'>>;
+  publishManyPortfolios?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationPublishManyPortfoliosArgs, 'to'>>;
+  publishManyPortfoliosConnection?: Resolver<ResolversTypes['PortfolioConnection'], ParentType, ContextType, RequireFields<MutationPublishManyPortfoliosConnectionArgs, 'from' | 'to'>>;
+  publishManyPosts?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationPublishManyPostsArgs, 'to'>>;
+  publishManyPostsConnection?: Resolver<ResolversTypes['PostConnection'], ParentType, ContextType, RequireFields<MutationPublishManyPostsConnectionArgs, 'from' | 'to'>>;
+  publishManySeos?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationPublishManySeosArgs, 'to'>>;
+  publishManySeosConnection?: Resolver<ResolversTypes['SeoConnection'], ParentType, ContextType, RequireFields<MutationPublishManySeosConnectionArgs, 'from' | 'to'>>;
+  publishPage?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<MutationPublishPageArgs, 'to' | 'where'>>;
+  publishPortfolio?: Resolver<Maybe<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<MutationPublishPortfolioArgs, 'to' | 'where'>>;
+  publishPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationPublishPostArgs, 'to' | 'where'>>;
+  publishSeo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<MutationPublishSeoArgs, 'to' | 'where'>>;
+  schedulePublishAsset?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<MutationSchedulePublishAssetArgs, 'publishBase' | 'to' | 'where' | 'withDefaultLocale'>>;
+  schedulePublishAuthor?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<MutationSchedulePublishAuthorArgs, 'to' | 'where'>>;
+  schedulePublishCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationSchedulePublishCategoryArgs, 'to' | 'where'>>;
+  schedulePublishPage?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<MutationSchedulePublishPageArgs, 'to' | 'where'>>;
+  schedulePublishPortfolio?: Resolver<Maybe<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<MutationSchedulePublishPortfolioArgs, 'to' | 'where'>>;
+  schedulePublishPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationSchedulePublishPostArgs, 'to' | 'where'>>;
+  schedulePublishSeo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<MutationSchedulePublishSeoArgs, 'to' | 'where'>>;
+  scheduleUnpublishAsset?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<MutationScheduleUnpublishAssetArgs, 'from' | 'unpublishBase' | 'where'>>;
+  scheduleUnpublishAuthor?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<MutationScheduleUnpublishAuthorArgs, 'from' | 'where'>>;
+  scheduleUnpublishCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationScheduleUnpublishCategoryArgs, 'from' | 'where'>>;
+  scheduleUnpublishPage?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<MutationScheduleUnpublishPageArgs, 'from' | 'where'>>;
+  scheduleUnpublishPortfolio?: Resolver<Maybe<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<MutationScheduleUnpublishPortfolioArgs, 'from' | 'where'>>;
+  scheduleUnpublishPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationScheduleUnpublishPostArgs, 'from' | 'where'>>;
+  scheduleUnpublishSeo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<MutationScheduleUnpublishSeoArgs, 'from' | 'where'>>;
+  unpublishAsset?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<MutationUnpublishAssetArgs, 'from' | 'unpublishBase' | 'where'>>;
+  unpublishAuthor?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<MutationUnpublishAuthorArgs, 'from' | 'where'>>;
+  unpublishCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationUnpublishCategoryArgs, 'from' | 'where'>>;
+  unpublishManyAssets?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUnpublishManyAssetsArgs, 'from' | 'unpublishBase'>>;
+  unpublishManyAssetsConnection?: Resolver<ResolversTypes['AssetConnection'], ParentType, ContextType, RequireFields<MutationUnpublishManyAssetsConnectionArgs, 'from' | 'stage' | 'unpublishBase'>>;
+  unpublishManyAuthors?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUnpublishManyAuthorsArgs, 'from'>>;
+  unpublishManyAuthorsConnection?: Resolver<ResolversTypes['AuthorConnection'], ParentType, ContextType, RequireFields<MutationUnpublishManyAuthorsConnectionArgs, 'from' | 'stage'>>;
+  unpublishManyCategories?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUnpublishManyCategoriesArgs, 'from'>>;
+  unpublishManyCategoriesConnection?: Resolver<ResolversTypes['CategoryConnection'], ParentType, ContextType, RequireFields<MutationUnpublishManyCategoriesConnectionArgs, 'from' | 'stage'>>;
+  unpublishManyPages?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUnpublishManyPagesArgs, 'from'>>;
+  unpublishManyPagesConnection?: Resolver<ResolversTypes['PageConnection'], ParentType, ContextType, RequireFields<MutationUnpublishManyPagesConnectionArgs, 'from' | 'stage'>>;
+  unpublishManyPortfolios?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUnpublishManyPortfoliosArgs, 'from'>>;
+  unpublishManyPortfoliosConnection?: Resolver<ResolversTypes['PortfolioConnection'], ParentType, ContextType, RequireFields<MutationUnpublishManyPortfoliosConnectionArgs, 'from' | 'stage'>>;
+  unpublishManyPosts?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUnpublishManyPostsArgs, 'from'>>;
+  unpublishManyPostsConnection?: Resolver<ResolversTypes['PostConnection'], ParentType, ContextType, RequireFields<MutationUnpublishManyPostsConnectionArgs, 'from' | 'stage'>>;
+  unpublishManySeos?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUnpublishManySeosArgs, 'from'>>;
+  unpublishManySeosConnection?: Resolver<ResolversTypes['SeoConnection'], ParentType, ContextType, RequireFields<MutationUnpublishManySeosConnectionArgs, 'from' | 'stage'>>;
+  unpublishPage?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<MutationUnpublishPageArgs, 'from' | 'where'>>;
+  unpublishPortfolio?: Resolver<Maybe<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<MutationUnpublishPortfolioArgs, 'from' | 'where'>>;
+  unpublishPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationUnpublishPostArgs, 'from' | 'where'>>;
+  unpublishSeo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<MutationUnpublishSeoArgs, 'from' | 'where'>>;
+  updateAsset?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<MutationUpdateAssetArgs, 'data' | 'where'>>;
+  updateAuthor?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<MutationUpdateAuthorArgs, 'data' | 'where'>>;
+  updateCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationUpdateCategoryArgs, 'data' | 'where'>>;
+  updateManyAssets?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUpdateManyAssetsArgs, 'data'>>;
+  updateManyAssetsConnection?: Resolver<ResolversTypes['AssetConnection'], ParentType, ContextType, RequireFields<MutationUpdateManyAssetsConnectionArgs, 'data'>>;
+  updateManyAuthors?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUpdateManyAuthorsArgs, 'data'>>;
+  updateManyAuthorsConnection?: Resolver<ResolversTypes['AuthorConnection'], ParentType, ContextType, RequireFields<MutationUpdateManyAuthorsConnectionArgs, 'data'>>;
+  updateManyCategories?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUpdateManyCategoriesArgs, 'data'>>;
+  updateManyCategoriesConnection?: Resolver<ResolversTypes['CategoryConnection'], ParentType, ContextType, RequireFields<MutationUpdateManyCategoriesConnectionArgs, 'data'>>;
+  updateManyPages?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUpdateManyPagesArgs, 'data'>>;
+  updateManyPagesConnection?: Resolver<ResolversTypes['PageConnection'], ParentType, ContextType, RequireFields<MutationUpdateManyPagesConnectionArgs, 'data'>>;
+  updateManyPortfolios?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUpdateManyPortfoliosArgs, 'data'>>;
+  updateManyPortfoliosConnection?: Resolver<ResolversTypes['PortfolioConnection'], ParentType, ContextType, RequireFields<MutationUpdateManyPortfoliosConnectionArgs, 'data'>>;
+  updateManyPosts?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUpdateManyPostsArgs, 'data'>>;
+  updateManyPostsConnection?: Resolver<ResolversTypes['PostConnection'], ParentType, ContextType, RequireFields<MutationUpdateManyPostsConnectionArgs, 'data'>>;
+  updateManySeos?: Resolver<ResolversTypes['BatchPayload'], ParentType, ContextType, RequireFields<MutationUpdateManySeosArgs, 'data'>>;
+  updateManySeosConnection?: Resolver<ResolversTypes['SeoConnection'], ParentType, ContextType, RequireFields<MutationUpdateManySeosConnectionArgs, 'data'>>;
+  updatePage?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<MutationUpdatePageArgs, 'data' | 'where'>>;
+  updatePortfolio?: Resolver<Maybe<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<MutationUpdatePortfolioArgs, 'data' | 'where'>>;
+  updatePost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationUpdatePostArgs, 'data' | 'where'>>;
+  updateScheduledRelease?: Resolver<Maybe<ResolversTypes['ScheduledRelease']>, ParentType, ContextType, RequireFields<MutationUpdateScheduledReleaseArgs, 'data' | 'where'>>;
+  updateSeo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<MutationUpdateSeoArgs, 'data' | 'where'>>;
+  upsertAsset?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<MutationUpsertAssetArgs, 'upsert' | 'where'>>;
+  upsertAuthor?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<MutationUpsertAuthorArgs, 'upsert' | 'where'>>;
+  upsertCategory?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<MutationUpsertCategoryArgs, 'upsert' | 'where'>>;
+  upsertPage?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<MutationUpsertPageArgs, 'upsert' | 'where'>>;
+  upsertPortfolio?: Resolver<Maybe<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<MutationUpsertPortfolioArgs, 'upsert' | 'where'>>;
+  upsertPost?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<MutationUpsertPostArgs, 'upsert' | 'where'>>;
+  upsertSeo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<MutationUpsertSeoArgs, 'upsert' | 'where'>>;
+};
+
+export type NodeResolvers<ContextType = any, ParentType extends ResolversParentTypes['Node'] = ResolversParentTypes['Node']> = {
+  __resolveType: TypeResolveFn<'Asset' | 'Author' | 'Category' | 'Page' | 'Portfolio' | 'Post' | 'ScheduledOperation' | 'ScheduledRelease' | 'Seo' | 'User', ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+};
+
+export type PageResolvers<ContextType = any, ParentType extends ResolversParentTypes['Page'] = ResolversParentTypes['Page']> = {
+  content?: Resolver<ResolversTypes['RichText'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<PageCreatedByArgs>>;
+  documentInStages?: Resolver<Array<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<PageDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  history?: Resolver<Array<ResolversTypes['Version']>, ParentType, ContextType, RequireFields<PageHistoryArgs, 'limit' | 'skip'>>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  publishedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<PagePublishedByArgs>>;
+  scheduledIn?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, Partial<PageScheduledInArgs>>;
+  seo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, Partial<PageSeoArgs>>;
+  slug?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  subtitle?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<PageUpdatedByArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PageConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageConnection'] = ResolversParentTypes['PageConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['PageEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PageEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageEdge'] = ResolversParentTypes['PageEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Page'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PageInfoResolvers<ContextType = any, ParentType extends ResolversParentTypes['PageInfo'] = ResolversParentTypes['PageInfo']> = {
+  endCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  hasNextPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  hasPreviousPage?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  pageSize?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  startCursor?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PortfolioResolvers<ContextType = any, ParentType extends ResolversParentTypes['Portfolio'] = ResolversParentTypes['Portfolio']> = {
+  buttonText?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  cardImage?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, Partial<PortfolioCardImageArgs>>;
+  category?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  client?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<PortfolioCreatedByArgs>>;
+  documentInStages?: Resolver<Array<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<PortfolioDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  external?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  history?: Resolver<Array<ResolversTypes['Version']>, ParentType, ContextType, RequireFields<PortfolioHistoryArgs, 'limit' | 'skip'>>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  kind?: Resolver<Maybe<ResolversTypes['Kind']>, ParentType, ContextType>;
+  link?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  modal?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  publishedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<PortfolioPublishedByArgs>>;
+  scheduledIn?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, Partial<PortfolioScheduledInArgs>>;
+  skills?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  tools?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<PortfolioUpdatedByArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PortfolioConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['PortfolioConnection'] = ResolversParentTypes['PortfolioConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['PortfolioEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PortfolioEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['PortfolioEdge'] = ResolversParentTypes['PortfolioEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Portfolio'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PostResolvers<ContextType = any, ParentType extends ResolversParentTypes['Post'] = ResolversParentTypes['Post']> = {
+  author?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, Partial<PostAuthorArgs>>;
+  content?: Resolver<ResolversTypes['RichText'], ParentType, ContextType>;
+  coverImage?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, Partial<PostCoverImageArgs>>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<PostCreatedByArgs>>;
+  date?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  documentInStages?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<PostDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  excerpt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  history?: Resolver<Array<ResolversTypes['Version']>, ParentType, ContextType, RequireFields<PostHistoryArgs, 'limit' | 'skip'>>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  publishedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<PostPublishedByArgs>>;
+  scheduledIn?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, Partial<PostScheduledInArgs>>;
+  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  tags?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<PostUpdatedByArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PostConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['PostConnection'] = ResolversParentTypes['PostConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['PostEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PostEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['PostEdge'] = ResolversParentTypes['PostEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Post'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  asset?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<QueryAssetArgs, 'locales' | 'stage' | 'where'>>;
+  assetVersion?: Resolver<Maybe<ResolversTypes['DocumentVersion']>, ParentType, ContextType, RequireFields<QueryAssetVersionArgs, 'where'>>;
+  assets?: Resolver<Array<ResolversTypes['Asset']>, ParentType, ContextType, RequireFields<QueryAssetsArgs, 'locales' | 'stage'>>;
+  assetsConnection?: Resolver<ResolversTypes['AssetConnection'], ParentType, ContextType, RequireFields<QueryAssetsConnectionArgs, 'locales' | 'stage'>>;
+  author?: Resolver<Maybe<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<QueryAuthorArgs, 'locales' | 'stage' | 'where'>>;
+  authorVersion?: Resolver<Maybe<ResolversTypes['DocumentVersion']>, ParentType, ContextType, RequireFields<QueryAuthorVersionArgs, 'where'>>;
+  authors?: Resolver<Array<ResolversTypes['Author']>, ParentType, ContextType, RequireFields<QueryAuthorsArgs, 'locales' | 'stage'>>;
+  authorsConnection?: Resolver<ResolversTypes['AuthorConnection'], ParentType, ContextType, RequireFields<QueryAuthorsConnectionArgs, 'locales' | 'stage'>>;
+  categories?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<QueryCategoriesArgs, 'locales' | 'stage'>>;
+  categoriesConnection?: Resolver<ResolversTypes['CategoryConnection'], ParentType, ContextType, RequireFields<QueryCategoriesConnectionArgs, 'locales' | 'stage'>>;
+  category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<QueryCategoryArgs, 'locales' | 'stage' | 'where'>>;
+  categoryVersion?: Resolver<Maybe<ResolversTypes['DocumentVersion']>, ParentType, ContextType, RequireFields<QueryCategoryVersionArgs, 'where'>>;
+  node?: Resolver<Maybe<ResolversTypes['Node']>, ParentType, ContextType, RequireFields<QueryNodeArgs, 'id' | 'locales' | 'stage'>>;
+  page?: Resolver<Maybe<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<QueryPageArgs, 'locales' | 'stage' | 'where'>>;
+  pageVersion?: Resolver<Maybe<ResolversTypes['DocumentVersion']>, ParentType, ContextType, RequireFields<QueryPageVersionArgs, 'where'>>;
+  pages?: Resolver<Array<ResolversTypes['Page']>, ParentType, ContextType, RequireFields<QueryPagesArgs, 'locales' | 'stage'>>;
+  pagesConnection?: Resolver<ResolversTypes['PageConnection'], ParentType, ContextType, RequireFields<QueryPagesConnectionArgs, 'locales' | 'stage'>>;
+  portfolio?: Resolver<Maybe<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<QueryPortfolioArgs, 'locales' | 'stage' | 'where'>>;
+  portfolioVersion?: Resolver<Maybe<ResolversTypes['DocumentVersion']>, ParentType, ContextType, RequireFields<QueryPortfolioVersionArgs, 'where'>>;
+  portfolios?: Resolver<Array<ResolversTypes['Portfolio']>, ParentType, ContextType, RequireFields<QueryPortfoliosArgs, 'locales' | 'stage'>>;
+  portfoliosConnection?: Resolver<ResolversTypes['PortfolioConnection'], ParentType, ContextType, RequireFields<QueryPortfoliosConnectionArgs, 'locales' | 'stage'>>;
+  post?: Resolver<Maybe<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryPostArgs, 'locales' | 'stage' | 'where'>>;
+  postVersion?: Resolver<Maybe<ResolversTypes['DocumentVersion']>, ParentType, ContextType, RequireFields<QueryPostVersionArgs, 'where'>>;
+  posts?: Resolver<Array<ResolversTypes['Post']>, ParentType, ContextType, RequireFields<QueryPostsArgs, 'locales' | 'stage'>>;
+  postsConnection?: Resolver<ResolversTypes['PostConnection'], ParentType, ContextType, RequireFields<QueryPostsConnectionArgs, 'locales' | 'stage'>>;
+  scheduledOperation?: Resolver<Maybe<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, RequireFields<QueryScheduledOperationArgs, 'locales' | 'stage' | 'where'>>;
+  scheduledOperations?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, RequireFields<QueryScheduledOperationsArgs, 'locales' | 'stage'>>;
+  scheduledOperationsConnection?: Resolver<ResolversTypes['ScheduledOperationConnection'], ParentType, ContextType, RequireFields<QueryScheduledOperationsConnectionArgs, 'locales' | 'stage'>>;
+  scheduledRelease?: Resolver<Maybe<ResolversTypes['ScheduledRelease']>, ParentType, ContextType, RequireFields<QueryScheduledReleaseArgs, 'locales' | 'stage' | 'where'>>;
+  scheduledReleases?: Resolver<Array<ResolversTypes['ScheduledRelease']>, ParentType, ContextType, RequireFields<QueryScheduledReleasesArgs, 'locales' | 'stage'>>;
+  scheduledReleasesConnection?: Resolver<ResolversTypes['ScheduledReleaseConnection'], ParentType, ContextType, RequireFields<QueryScheduledReleasesConnectionArgs, 'locales' | 'stage'>>;
+  seo?: Resolver<Maybe<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<QuerySeoArgs, 'locales' | 'stage' | 'where'>>;
+  seoVersion?: Resolver<Maybe<ResolversTypes['DocumentVersion']>, ParentType, ContextType, RequireFields<QuerySeoVersionArgs, 'where'>>;
+  seos?: Resolver<Array<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<QuerySeosArgs, 'locales' | 'stage'>>;
+  seosConnection?: Resolver<ResolversTypes['SeoConnection'], ParentType, ContextType, RequireFields<QuerySeosConnectionArgs, 'locales' | 'stage'>>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'locales' | 'stage' | 'where'>>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'locales' | 'stage'>>;
+  usersConnection?: Resolver<ResolversTypes['UserConnection'], ParentType, ContextType, RequireFields<QueryUsersConnectionArgs, 'locales' | 'stage'>>;
+};
+
+export type RgbaResolvers<ContextType = any, ParentType extends ResolversParentTypes['RGBA'] = ResolversParentTypes['RGBA']> = {
+  a?: Resolver<ResolversTypes['RGBATransparency'], ParentType, ContextType>;
+  b?: Resolver<ResolversTypes['RGBAHue'], ParentType, ContextType>;
+  g?: Resolver<ResolversTypes['RGBAHue'], ParentType, ContextType>;
+  r?: Resolver<ResolversTypes['RGBAHue'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface RgbaHueScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['RGBAHue'], any> {
+  name: 'RGBAHue';
+}
+
+export interface RgbaTransparencyScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['RGBATransparency'], any> {
+  name: 'RGBATransparency';
+}
+
+export type RichTextResolvers<ContextType = any, ParentType extends ResolversParentTypes['RichText'] = ResolversParentTypes['RichText']> = {
+  html?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  markdown?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  raw?: Resolver<ResolversTypes['RichTextAST'], ParentType, ContextType>;
+  text?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface RichTextAstScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['RichTextAST'], any> {
+  name: 'RichTextAST';
+}
+
+export type ScheduledOperationResolvers<ContextType = any, ParentType extends ResolversParentTypes['ScheduledOperation'] = ResolversParentTypes['ScheduledOperation']> = {
+  affectedDocuments?: Resolver<Array<ResolversTypes['ScheduledOperationAffectedDocument']>, ParentType, ContextType, Partial<ScheduledOperationAffectedDocumentsArgs>>;
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<ScheduledOperationCreatedByArgs>>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  documentInStages?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, RequireFields<ScheduledOperationDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  errorMessage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  publishedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<ScheduledOperationPublishedByArgs>>;
+  rawPayload?: Resolver<ResolversTypes['Json'], ParentType, ContextType>;
+  release?: Resolver<Maybe<ResolversTypes['ScheduledRelease']>, ParentType, ContextType, Partial<ScheduledOperationReleaseArgs>>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  status?: Resolver<ResolversTypes['ScheduledOperationStatus'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<ScheduledOperationUpdatedByArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ScheduledOperationAffectedDocumentResolvers<ContextType = any, ParentType extends ResolversParentTypes['ScheduledOperationAffectedDocument'] = ResolversParentTypes['ScheduledOperationAffectedDocument']> = {
+  __resolveType: TypeResolveFn<'Asset' | 'Author' | 'Category' | 'Page' | 'Portfolio' | 'Post' | 'Seo', ParentType, ContextType>;
+};
+
+export type ScheduledOperationConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ScheduledOperationConnection'] = ResolversParentTypes['ScheduledOperationConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['ScheduledOperationEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ScheduledOperationEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['ScheduledOperationEdge'] = ResolversParentTypes['ScheduledOperationEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['ScheduledOperation'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ScheduledReleaseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ScheduledRelease'] = ResolversParentTypes['ScheduledRelease']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<ScheduledReleaseCreatedByArgs>>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  documentInStages?: Resolver<Array<ResolversTypes['ScheduledRelease']>, ParentType, ContextType, RequireFields<ScheduledReleaseDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  errorMessage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isActive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  isImplicit?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  operations?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, Partial<ScheduledReleaseOperationsArgs>>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  publishedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<ScheduledReleasePublishedByArgs>>;
+  releaseAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  status?: Resolver<ResolversTypes['ScheduledReleaseStatus'], ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<ScheduledReleaseUpdatedByArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ScheduledReleaseConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['ScheduledReleaseConnection'] = ResolversParentTypes['ScheduledReleaseConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['ScheduledReleaseEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ScheduledReleaseEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['ScheduledReleaseEdge'] = ResolversParentTypes['ScheduledReleaseEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['ScheduledRelease'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SeoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Seo'] = ResolversParentTypes['Seo']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  createdBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<SeoCreatedByArgs>>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  documentInStages?: Resolver<Array<ResolversTypes['Seo']>, ParentType, ContextType, RequireFields<SeoDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  history?: Resolver<Array<ResolversTypes['Version']>, ParentType, ContextType, RequireFields<SeoHistoryArgs, 'limit' | 'skip'>>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['Asset']>, ParentType, ContextType, Partial<SeoImageArgs>>;
+  keywords?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
+  parent?: Resolver<Maybe<ResolversTypes['SeoParent']>, ParentType, ContextType, Partial<SeoParentArgs>>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  publishedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<SeoPublishedByArgs>>;
+  scheduledIn?: Resolver<Array<ResolversTypes['ScheduledOperation']>, ParentType, ContextType, Partial<SeoScheduledInArgs>>;
+  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  updatedBy?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, Partial<SeoUpdatedByArgs>>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SeoConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['SeoConnection'] = ResolversParentTypes['SeoConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['SeoEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SeoEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['SeoEdge'] = ResolversParentTypes['SeoEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['Seo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SeoParentResolvers<ContextType = any, ParentType extends ResolversParentTypes['SeoParent'] = ResolversParentTypes['SeoParent']> = {
+  __resolveType: TypeResolveFn<'Page', ParentType, ContextType>;
+};
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  documentInStages?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<UserDocumentInStagesArgs, 'includeCurrent' | 'inheritLocale' | 'stages'>>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  isActive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  kind?: Resolver<ResolversTypes['UserKind'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  picture?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  publishedAt?: Resolver<Maybe<ResolversTypes['DateTime']>, ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserConnectionResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserConnection'] = ResolversParentTypes['UserConnection']> = {
+  aggregate?: Resolver<ResolversTypes['Aggregate'], ParentType, ContextType>;
+  edges?: Resolver<Array<ResolversTypes['UserEdge']>, ParentType, ContextType>;
+  pageInfo?: Resolver<ResolversTypes['PageInfo'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserEdgeResolvers<ContextType = any, ParentType extends ResolversParentTypes['UserEdge'] = ResolversParentTypes['UserEdge']> = {
+  cursor?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  node?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type VersionResolvers<ContextType = any, ParentType extends ResolversParentTypes['Version'] = ResolversParentTypes['Version']> = {
+  createdAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  revision?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  stage?: Resolver<ResolversTypes['Stage'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Resolvers<ContextType = any> = {
+  Aggregate?: AggregateResolvers<ContextType>;
+  Asset?: AssetResolvers<ContextType>;
+  AssetConnection?: AssetConnectionResolvers<ContextType>;
+  AssetEdge?: AssetEdgeResolvers<ContextType>;
+  Author?: AuthorResolvers<ContextType>;
+  AuthorConnection?: AuthorConnectionResolvers<ContextType>;
+  AuthorEdge?: AuthorEdgeResolvers<ContextType>;
+  BatchPayload?: BatchPayloadResolvers<ContextType>;
+  Category?: CategoryResolvers<ContextType>;
+  CategoryConnection?: CategoryConnectionResolvers<ContextType>;
+  CategoryEdge?: CategoryEdgeResolvers<ContextType>;
+  Color?: ColorResolvers<ContextType>;
+  Date?: GraphQLScalarType;
+  DateTime?: GraphQLScalarType;
+  DocumentVersion?: DocumentVersionResolvers<ContextType>;
+  Hex?: GraphQLScalarType;
+  Json?: GraphQLScalarType;
+  Location?: LocationResolvers<ContextType>;
+  Long?: GraphQLScalarType;
+  Mutation?: MutationResolvers<ContextType>;
+  Node?: NodeResolvers<ContextType>;
+  Page?: PageResolvers<ContextType>;
+  PageConnection?: PageConnectionResolvers<ContextType>;
+  PageEdge?: PageEdgeResolvers<ContextType>;
+  PageInfo?: PageInfoResolvers<ContextType>;
+  Portfolio?: PortfolioResolvers<ContextType>;
+  PortfolioConnection?: PortfolioConnectionResolvers<ContextType>;
+  PortfolioEdge?: PortfolioEdgeResolvers<ContextType>;
+  Post?: PostResolvers<ContextType>;
+  PostConnection?: PostConnectionResolvers<ContextType>;
+  PostEdge?: PostEdgeResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
+  RGBA?: RgbaResolvers<ContextType>;
+  RGBAHue?: GraphQLScalarType;
+  RGBATransparency?: GraphQLScalarType;
+  RichText?: RichTextResolvers<ContextType>;
+  RichTextAST?: GraphQLScalarType;
+  ScheduledOperation?: ScheduledOperationResolvers<ContextType>;
+  ScheduledOperationAffectedDocument?: ScheduledOperationAffectedDocumentResolvers<ContextType>;
+  ScheduledOperationConnection?: ScheduledOperationConnectionResolvers<ContextType>;
+  ScheduledOperationEdge?: ScheduledOperationEdgeResolvers<ContextType>;
+  ScheduledRelease?: ScheduledReleaseResolvers<ContextType>;
+  ScheduledReleaseConnection?: ScheduledReleaseConnectionResolvers<ContextType>;
+  ScheduledReleaseEdge?: ScheduledReleaseEdgeResolvers<ContextType>;
+  Seo?: SeoResolvers<ContextType>;
+  SeoConnection?: SeoConnectionResolvers<ContextType>;
+  SeoEdge?: SeoEdgeResolvers<ContextType>;
+  SeoParent?: SeoParentResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  UserConnection?: UserConnectionResolvers<ContextType>;
+  UserEdge?: UserEdgeResolvers<ContextType>;
+  Version?: VersionResolvers<ContextType>;
+};
+

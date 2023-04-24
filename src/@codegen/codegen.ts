@@ -15,7 +15,9 @@ const config: CodegenConfig = {
         'typescript',
         'typescript-operations',
         'typescript-react-apollo',
+        'typescript-resolvers',
       ],
+      config: { federation: true },
     },
   },
 };
