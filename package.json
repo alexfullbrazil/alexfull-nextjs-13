@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "codegen": "graphql-codegen --require dotenv/config --config src/@codegen/codegen.ts"
+    "codegen": "graphql-codegen --require dotenv/config"
   },
   "dependencies": {
     "@apollo/client": "^3.7.10",
@@ -23,6 +23,7 @@
     "eslint-config-next": "13.2.4",
     "graphql": "^16.6.0",
     "next": "13.2.4",
+    "next-seo": "^6.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-svg": "^16.1.7",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^3.2.2",
+    "@graphql-codegen/client-preset": "^4.1.0",
     "@graphql-codegen/typescript": "^3.0.2",
     "@graphql-codegen/typescript-operations": "^3.0.2",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",

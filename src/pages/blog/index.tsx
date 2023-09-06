@@ -3,7 +3,7 @@ import {
   ImageFit,
   PostOrderByInput,
   useGetPostsQuery,
-} from '@/@codegen/gql/types';
+} from '@/gql/generated/graphql';
 import FeaturedPosts from '@/components/pages/blog/featured-posts';
 import { PostCard } from '@/components/pages/blog/post-card';
 import SearchResults from '@/components/pages/blog/search/search-results';
