@@ -52,44 +52,23 @@ export default function Post() {
 
   return (
     <>
-      <Head>
-        <title>
-          {process.env.NEXT_PUBLIC_SITE_NAME} | {dataPost?.post.title}
-        </title>
-        <meta name="description" content={dataPost?.post?.excerpt} />
-        <meta property="og:title" content={dataPost?.post.title} />
-        <meta property="og:description" content={dataPost?.post?.excerpt} />
-        <meta property="og:image" content={dataPost?.post.coverImage.url} />
-      </Head>
-
       <NextSeo
         title={dataPost?.post.title}
         description={dataPost?.post?.excerpt}
         canonical="https://www.alexfull.com/"
         openGraph={{
-          url: 'https://www.alexfull.com',
-          title: 'AlexFull Brazil',
-          description:
-            'A FullStack App with Hygraph, Next.JS 13 & Apollo GraphQL',
+          url: `${'https://alexfull.com/blog/' + dataPost?.post?.slug}`,
+          title: dataPost?.post.title,
+          description: dataPost?.post.excerpt,
           images: [
             {
-              url: dataPost?.post?.coverImage?.url,
+              url: `${dataPost?.post?.coverImage?.url}`,
               width: 800,
               height: 600,
               alt: 'Og Image Alt',
-              type: 'image/jpeg',
             },
-            {
-              url: dataPost?.post?.coverImage?.url,
-              width: 900,
-              height: 800,
-              alt: 'Og Image Alt Second',
-              type: 'image/jpeg',
-            },
-            { url: 'https://www.example.ie/og-image-03.jpg' },
-            { url: 'https://www.example.ie/og-image-04.jpg' },
           ],
-          siteName: 'AlexFull',
+          siteName: 'AlexFull Brazil',
         }}
       />
 
