@@ -1,27 +1,17 @@
 import { NextSeo } from 'next-seo';
 
+import { Post } from '@/@codegen/gql/types';
 import {
-  useGetPostQuery,
-  ImageFit,
-  GetPostsQuery,
-  useGetPostsQuery,
-  GetPostDocument,
-  GetPostsDocument,
-  GetPostQuery,
-  GetPostBySlugQuery,
   GetPostBySlugDocument,
+  GetPostBySlugQuery,
+  GetPostDocument,
+  GetPostQuery,
 } from '@/gql/generated/graphql';
-import { client } from '@/contexts/graphql-context';
-import { useRouter } from 'next/router';
+import { graphqlClient } from '@/lib/graphql-client';
 import { formatDate } from '@/utils/formatters';
+import { GetStaticProps } from 'next';
 import Image from 'next/image';
 import Head from 'next/head';
-import Loading from '@/components/shared/loading';
-import { GetStaticPaths, GetStaticProps } from 'next';
-import { gql } from '@apollo/client';
-import { GetPost, GetPosts } from '@/gql/docs/posts/posts';
-import { graphqlClient } from '@/lib/graphql-client';
-import { Post } from '@/@codegen/gql/types';
 
 export default function PostPage({
   slug,
@@ -34,7 +24,16 @@ export default function PostPage({
 }: Post) {
   return (
     <>
-      <NextSeo
+      <Head>
+        <title>
+          {process.env.NEXT_PUBLIC_SITE_NAME} | {title}
+        </title>
+        <meta name="description" content={excerpt} />
+        <meta property="og:description" content={excerpt} />
+        <meta property="og:image" content={coverImage.url} />
+      </Head>
+
+      {/* <NextSeo
         title={title}
         description={excerpt}
         canonical="https://www.alexfull.com/"
@@ -52,7 +51,7 @@ export default function PostPage({
           ],
           siteName: 'AlexFull Brazil',
         }}
-      />
+      /> */}
 
       <section className="container">
         <div className="post-content">
