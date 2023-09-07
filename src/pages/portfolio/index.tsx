@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useGetPortfoliosQuery } from '@/@codegen/gql/types';
+import { useGetPortfoliosQuery } from '@/gql/generated/graphql';
 import Svg from '@/components/shared/svg';
 import { PortfolioCard } from '@/components/pages/portfolio/portfolio-card';
 import CardsPortfoliosSkeleton from '@/components/pages/portfolio/skeleton/cards-portfolios-skeleton';

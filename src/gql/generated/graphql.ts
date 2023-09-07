@@ -7717,6 +7717,13 @@ export enum _SystemDateTimeFieldVariation {
   Localization = 'localization'
 }
 
+export type GetPortfoliosQueryVariables = Exact<{
+  where?: InputMaybe<PortfolioWhereInput>;
+}>;
+
+
+export type GetPortfoliosQuery = { __typename?: 'Query', portfolios: Array<{ __typename?: 'Portfolio', id: string, title: string, category?: string | null, tools?: string | null, skills?: string | null, client?: string | null, kind?: Kind | null, link?: string | null, external?: boolean | null, modal: boolean, buttonText?: string | null, cardImage?: { __typename?: 'Asset', url: string } | null }>, portfoliosConnection: { __typename?: 'PortfolioConnection', pageInfo: { __typename?: 'PageInfo', pageSize?: number | null } } };
+
 export type GetPostsQueryVariables = Exact<{
   skip?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<PostOrderByInput>;
@@ -7744,8 +7751,62 @@ export type GetPostBySlugQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetPostBySlugQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', slug?: string | null }> };
 
 
+export const GetPortfoliosDocument = gql`
+    query GetPortfolios($where: PortfolioWhereInput) {
+  portfolios(where: $where) {
+    id
+    title
+    category
+    title
+    tools
+    skills
+    cardImage {
+      url
+    }
+    client
+    kind
+    link
+    external
+    modal
+    buttonText
+  }
+  portfoliosConnection {
+    pageInfo {
+      pageSize
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPortfoliosQuery__
+ *
+ * To run a query within a React component, call `useGetPortfoliosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPortfoliosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPortfoliosQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGetPortfoliosQuery(baseOptions?: Apollo.QueryHookOptions<GetPortfoliosQuery, GetPortfoliosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPortfoliosQuery, GetPortfoliosQueryVariables>(GetPortfoliosDocument, options);
+      }
+export function useGetPortfoliosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPortfoliosQuery, GetPortfoliosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPortfoliosQuery, GetPortfoliosQueryVariables>(GetPortfoliosDocument, options);
+        }
+export type GetPortfoliosQueryHookResult = ReturnType<typeof useGetPortfoliosQuery>;
+export type GetPortfoliosLazyQueryHookResult = ReturnType<typeof useGetPortfoliosLazyQuery>;
+export type GetPortfoliosQueryResult = Apollo.QueryResult<GetPortfoliosQuery, GetPortfoliosQueryVariables>;
 export const GetPostsDocument = gql`
-    query getPosts($skip: Int, $orderBy: PostOrderByInput, $coverTransformation: AssetTransformationInput, $avatarTransformation: AssetTransformationInput, $where: PostWhereInput, $first: Int) {
+    query GetPosts($skip: Int, $orderBy: PostOrderByInput, $coverTransformation: AssetTransformationInput, $avatarTransformation: AssetTransformationInput, $where: PostWhereInput, $first: Int) {
   posts(skip: $skip, orderBy: $orderBy, where: $where, first: $first) {
     id
     title
@@ -7809,7 +7870,7 @@ export type GetPostsQueryHookResult = ReturnType<typeof useGetPostsQuery>;
 export type GetPostsLazyQueryHookResult = ReturnType<typeof useGetPostsLazyQuery>;
 export type GetPostsQueryResult = Apollo.QueryResult<GetPostsQuery, GetPostsQueryVariables>;
 export const GetPostDocument = gql`
-    query getPost($where: PostWhereUniqueInput!, $coverTransformation: AssetTransformationInput, $avatarTransformation: AssetTransformationInput) {
+    query GetPost($where: PostWhereUniqueInput!, $coverTransformation: AssetTransformationInput, $avatarTransformation: AssetTransformationInput) {
   post(where: $where) {
     id
     title
@@ -7867,7 +7928,7 @@ export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>;
 export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>;
 export type GetPostQueryResult = Apollo.QueryResult<GetPostQuery, GetPostQueryVariables>;
 export const GetPostBySlugDocument = gql`
-    query getPostBySlug {
+    query GetPostBySlug {
   posts {
     slug
   }

@@ -1,11 +1,11 @@
 import { NextSeo } from 'next-seo';
 
-import { Post } from '@/@codegen/gql/types';
 import {
   GetPostBySlugDocument,
   GetPostBySlugQuery,
   GetPostDocument,
   GetPostQuery,
+  Post,
 } from '@/gql/generated/graphql';
 import { graphqlClient } from '@/lib/graphql-client';
 import { formatDate } from '@/utils/formatters';
@@ -26,32 +26,12 @@ export default function PostPage({
     <>
       <Head>
         <title>
-          {process.env.NEXT_PUBLIC_SITE_NAME} | {title}
+          {process.env.NEXT_PUBLIC_SITE_NAME} - {title}
         </title>
         <meta name="description" content={excerpt} />
         <meta property="og:description" content={excerpt} />
         <meta property="og:image" content={coverImage.url} />
       </Head>
-
-      {/* <NextSeo
-        title={title}
-        description={excerpt}
-        canonical="https://www.alexfull.com/"
-        openGraph={{
-          url: `${'https://alexfull.com/blog/' + slug}`,
-          title: title,
-          description: excerpt,
-          images: [
-            {
-              url: `${coverImage?.url}`,
-              width: 800,
-              height: 600,
-              alt: 'Og Image Alt',
-            },
-          ],
-          siteName: 'AlexFull Brazil',
-        }}
-      /> */}
 
       <section className="container">
         <div className="post-content">

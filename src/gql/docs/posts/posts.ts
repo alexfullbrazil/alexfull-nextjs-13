@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GetPosts = gql(/* GraphQL */ `
-  query getPosts(
+  query GetPosts(
     $skip: Int
     $orderBy: PostOrderByInput
     $coverTransformation: AssetTransformationInput
@@ -40,7 +40,7 @@ export const GetPosts = gql(/* GraphQL */ `
 `);
 
 export const GetPost = gql(/* GraphQL */ `
-  query getPost(
+  query GetPost(
     $where: PostWhereUniqueInput!
     $coverTransformation: AssetTransformationInput
     $avatarTransformation: AssetTransformationInput
@@ -73,7 +73,7 @@ export const GetPost = gql(/* GraphQL */ `
 `);
 
 export const GetPostBySlug = gql(/* GraphQL */ `
-  query getPostBySlug {
+  query GetPostBySlug {
     posts {
       slug
     }
