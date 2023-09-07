@@ -71,3 +71,11 @@ export const GetPost = gql(/* GraphQL */ `
     }
   }
 `);
+
+export const GetPostBySlug = gql(/* GraphQL */ `
+  query getPostBySlug {
+    posts {
+      slug
+    }
+  }
+`);

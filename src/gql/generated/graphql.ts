@@ -7738,6 +7738,11 @@ export type GetPostQueryVariables = Exact<{
 
 export type GetPostQuery = { __typename?: 'Query', post?: { __typename?: 'Post', id: string, title: string, excerpt?: string | null, createdAt: any, slug?: string | null, tags: Array<string>, content: { __typename?: 'RichText', html: string }, coverImage?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null, author?: { __typename?: 'Author', name: string, picture?: { __typename?: 'Asset', url: string, width?: number | null, height?: number | null } | null } | null } | null };
 
+export type GetPostBySlugQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetPostBySlugQuery = { __typename?: 'Query', posts: Array<{ __typename?: 'Post', slug?: string | null }> };
+
 
 export const GetPostsDocument = gql`
     query getPosts($skip: Int, $orderBy: PostOrderByInput, $coverTransformation: AssetTransformationInput, $avatarTransformation: AssetTransformationInput, $where: PostWhereInput, $first: Int) {
@@ -7861,6 +7866,40 @@ export function useGetPostLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetPostQueryHookResult = ReturnType<typeof useGetPostQuery>;
 export type GetPostLazyQueryHookResult = ReturnType<typeof useGetPostLazyQuery>;
 export type GetPostQueryResult = Apollo.QueryResult<GetPostQuery, GetPostQueryVariables>;
+export const GetPostBySlugDocument = gql`
+    query getPostBySlug {
+  posts {
+    slug
+  }
+}
+    `;
+
+/**
+ * __useGetPostBySlugQuery__
+ *
+ * To run a query within a React component, call `useGetPostBySlugQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPostBySlugQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPostBySlugQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetPostBySlugQuery(baseOptions?: Apollo.QueryHookOptions<GetPostBySlugQuery, GetPostBySlugQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPostBySlugQuery, GetPostBySlugQueryVariables>(GetPostBySlugDocument, options);
+      }
+export function useGetPostBySlugLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPostBySlugQuery, GetPostBySlugQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPostBySlugQuery, GetPostBySlugQueryVariables>(GetPostBySlugDocument, options);
+        }
+export type GetPostBySlugQueryHookResult = ReturnType<typeof useGetPostBySlugQuery>;
+export type GetPostBySlugLazyQueryHookResult = ReturnType<typeof useGetPostBySlugLazyQuery>;
+export type GetPostBySlugQueryResult = Apollo.QueryResult<GetPostBySlugQuery, GetPostBySlugQueryVariables>;
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;

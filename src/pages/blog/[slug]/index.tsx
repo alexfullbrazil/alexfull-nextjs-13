@@ -8,6 +8,8 @@ import {
   GetPostDocument,
   GetPostsDocument,
   GetPostQuery,
+  GetPostBySlugQuery,
+  GetPostBySlugDocument,
 } from '@/gql/generated/graphql';
 import { client } from '@/contexts/graphql-context';
 import { useRouter } from 'next/router';
@@ -19,50 +21,30 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import { gql } from '@apollo/client';
 import { GetPost, GetPosts } from '@/gql/docs/posts/posts';
 import { graphqlClient } from '@/lib/graphql-client';
+import { Post } from '@/@codegen/gql/types';
 
-export default function Post() {
-  const router = useRouter();
-  const { slug } = router.query;
-
-  const { data: dataPost, loading } = useGetPostQuery({
-    variables: {
-      where: {
-        slug: slug as string,
-      },
-      coverTransformation: {
-        image: {
-          resize: {
-            width: 1280,
-            height: 720,
-            fit: ImageFit.Crop,
-          },
-        },
-      },
-      avatarTransformation: {
-        image: {
-          resize: {
-            width: 60,
-            height: 60,
-            fit: ImageFit.Crop,
-          },
-        },
-      },
-    },
-  });
-
+export default function PostPage({
+  slug,
+  title,
+  excerpt,
+  coverImage,
+  createdAt,
+  content,
+  author,
+}: Post) {
   return (
     <>
       <NextSeo
-        title={dataPost?.post.title}
-        description={dataPost?.post?.excerpt}
+        title={title}
+        description={excerpt}
         canonical="https://www.alexfull.com/"
         openGraph={{
-          url: `${'https://alexfull.com/blog/' + dataPost?.post?.slug}`,
-          title: dataPost?.post.title,
-          description: dataPost?.post.excerpt,
+          url: `${'https://alexfull.com/blog/' + slug}`,
+          title: title,
+          description: excerpt,
           images: [
             {
-              url: `${dataPost?.post?.coverImage?.url}`,
+              url: `${coverImage?.url}`,
               width: 800,
               height: 600,
               alt: 'Og Image Alt',
@@ -72,55 +54,49 @@ export default function Post() {
         }}
       />
 
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <section className="container">
-            <div className="post-content">
-              <div className="post-header">
-                <h1 className="post-title">{dataPost?.post?.title}</h1>
-                <p className="post-excerpt">{dataPost?.post?.excerpt}</p>
-                <div className="post-author-grid">
-                  <div className="post-author">
-                    <Image
-                      className="post-author-picture"
-                      src={dataPost?.post?.author?.picture?.url}
-                      alt={dataPost?.post?.author?.name}
-                      width={42}
-                      height={42}
-                    />
-                    <small>
-                      <b>{dataPost?.post?.author?.name}</b>
-                    </small>
-                  </div>
-                  <div>
-                    <time>
-                      <small>{formatDate(dataPost?.post?.createdAt)}</small>
-                    </time>
-                  </div>
-                </div>
+      <section className="container">
+        <div className="post-content">
+          <div className="post-header">
+            <h1 className="post-title">{title}</h1>
+            <p className="post-excerpt">{excerpt}</p>
+            <div className="post-author-grid">
+              <div className="post-author">
+                <Image
+                  className="post-author-picture"
+                  src={author?.picture?.url}
+                  alt={author?.name}
+                  width={42}
+                  height={42}
+                />
+                <small>
+                  <b>{author?.name}</b>
+                </small>
+              </div>
+              <div>
+                <time>
+                  <small>{formatDate(createdAt)}</small>
+                </time>
               </div>
             </div>
-            <Image
-              className="post-cover-image"
-              src={dataPost?.post?.coverImage?.url}
-              width={dataPost?.post.coverImage.width}
-              height={dataPost?.post.coverImage.height}
-              alt={dataPost?.post?.title}
-              priority
-              style={{ background: 'var(--lightGrey)' }}
-            />
-            <section className="post-content">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: dataPost?.post?.content.html,
-                }}
-              />
-            </section>
-          </section>
-        </>
-      )}
+          </div>
+        </div>
+        <Image
+          className="post-cover-image"
+          src={coverImage?.url}
+          width={coverImage.width}
+          height={coverImage.height}
+          alt={title}
+          priority
+          style={{ background: 'var(--lightGrey)' }}
+        />
+        <section className="post-content">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: content.html,
+            }}
+          />
+        </section>
+      </section>
     </>
   );
 }
@@ -140,25 +116,26 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       slug: post?.slug,
       title: post?.title,
       excerpt: post?.excerpt,
+      content: post?.content?.html,
+      author: post?.author,
       coverImage: {
         url: post?.coverImage?.url,
+        width: post?.coverImage?.width,
+        height: post?.coverImage?.height,
       },
     },
   };
 };
 
 export async function getStaticPaths() {
-  const { posts } = await graphqlClient.request<GetPostsQuery>(
-    GetPostsDocument,
-    {
-      first: 20,
-    },
+  const { posts } = await graphqlClient.request<GetPostBySlugQuery>(
+    GetPostBySlugDocument,
   );
 
   return {
     paths: posts?.map(({ slug }) => ({
       params: { slug },
     })),
-    fallback: true,
+    fallback: false,
   };
 }
