@@ -14,7 +14,6 @@ import Image from 'next/image';
 import Head from 'next/head';
 
 export default function PostPage({
-  slug,
   title,
   excerpt,
   coverImage,
@@ -42,13 +41,13 @@ export default function PostPage({
               <div className="post-author">
                 <Image
                   className="post-author-picture"
-                  src={author?.picture?.url}
-                  alt={author?.name}
+                  src={author.picture.url}
+                  alt={author.name}
                   width={42}
                   height={42}
                 />
                 <small>
-                  <b>{author?.name}</b>
+                  <b>{author.name}</b>
                 </small>
               </div>
               <div>
@@ -61,7 +60,7 @@ export default function PostPage({
         </div>
         <Image
           className="post-cover-image"
-          src={coverImage?.url}
+          src={coverImage.url}
           width={coverImage.width}
           height={coverImage.height}
           alt={title}
@@ -69,7 +68,11 @@ export default function PostPage({
           style={{ background: 'var(--lightGrey)' }}
         />
         <section className="post-content">
-          <div dangerouslySetInnerHTML={{ __html: content?.html }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: content.html,
+            }}
+          />
         </section>
       </section>
     </>
@@ -86,17 +89,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   if (!post) return { notFound: true };
 
   return {
-    revalidate: 60,
     props: {
-      slug: post?.slug,
-      title: post?.title,
-      excerpt: post?.excerpt,
-      content: post?.content?.html,
-      author: post?.author,
+      slug: post.slug,
+      title: post.title,
+      excerpt: post.excerpt,
+      author: post.author,
       coverImage: {
-        url: post?.coverImage?.url,
-        width: post?.coverImage?.width,
-        height: post?.coverImage?.height,
+        url: post.coverImage.url,
+        width: post.coverImage.width,
+        height: post.coverImage.height,
+      },
+      content: {
+        html: post.content.html,
       },
     },
   };
@@ -108,7 +112,7 @@ export async function getStaticPaths() {
   );
 
   return {
-    paths: posts?.map(({ slug }) => ({
+    paths: posts.map(({ slug }) => ({
       params: { slug },
     })),
     fallback: false,
