@@ -69,11 +69,7 @@ export default function PostPage({
           style={{ background: 'var(--lightGrey)' }}
         />
         <section className="post-content">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: content.html,
-            }}
-          />
+          <div dangerouslySetInnerHTML={{ __html: content?.html }} />
         </section>
       </section>
     </>
