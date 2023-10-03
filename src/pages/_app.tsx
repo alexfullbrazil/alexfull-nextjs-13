@@ -1,6 +1,7 @@
 import { ApolloProvider } from '@apollo/client';
 import { client } from '@/contexts/graphql-context';
 import type { AppProps } from 'next/app';
+import { Analytics } from '@vercel/analytics/react';
 
 import '@fontsource/inter/700.css';
 import '@fontsource/inter/400.css';
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Header />
       <main className="site-wrapper">
         <Component {...pageProps} />
+        <Analytics />
       </main>
     </ApolloProvider>
   );
